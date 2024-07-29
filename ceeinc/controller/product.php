@@ -59,12 +59,14 @@ class product extends ceemain
         if (!is_dir($target_dir)) {
             mkdir($target_dir, 0777, true);
         }
+        
+        $dir = "assets/img/products/";
     
         $photo_paths = [];
         foreach ($photos['name'] as $index => $file_name) {
             $file_tmp = $photos['tmp_name'][$index];
             $file_name = uniqid() . '_' . basename($file_name);
-            $target_file = $target_dir . $file_name;
+            $target_file = $dir . $file_name;
     
             if (move_uploaded_file($file_tmp, $target_file)) {
                 $photo_paths[] = $target_file;

@@ -68,9 +68,19 @@ Cee_assets::Assets();
                             <div class="col-xl-6 col-lg-6 col-md-7">
                                 <div class="header__action d-flex justify-content-center justify-content-md-end">
                                     <ul>
-                                        <li><a href="#">My Account</a></li>
-                                        <li><a href="#">My Wishlist</a></li>
-                                        <li><a href="<?= BASE_URL ?>authenticate/login">Sign In</a></li>
+                                        
+                                        <?php 
+                                            if(empty(Session::ceedata("cip_username"))) { ?>
+                                                <li><a href="<?= BASE_URL ?>authenticate/login">Sign In</a></li>
+                                         <?php  } else { ?>
+                                            <li><a href="#">My Account</a></li>
+                                            <li><a href="#">My Wishlist</a></li>
+                                            <li>
+                                                <a href="<?= BASE_URL ?>authenticate/logout"><i data-feather="log-in"> </i><span>Log out</span></a>
+                                            </li>
+                                         <?php }
+                                        ?>
+                                        
                                         <li><a href="#">Compare</a></li>
                                     </ul>
                                 </div>

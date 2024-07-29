@@ -30,12 +30,12 @@
                   $sn = 1;
                   foreach ($products as $product) : 
                       $thumbnail = product_model::getProductThumbnail($product['id']);
-                      $product_image = $thumbnail ? $thumbnail["product_image"] : 'path/to/placeholder/image.jpg';
+                      $product_image = $thumbnail ? $thumbnail["product_image"] : BASE_URL.'assets/img/no_image.jpg';
                   ?>
                   <tr>
                     <td><?= $sn ?></td>
                     <td> 
-                      <img class="img-fluid table-avtar" src="<?= $thumbnail["product_image"] ?>" alt="profile">
+                      <img class="img-fluid table-avtar" src="<?= BASE_URL. $thumbnail["product_image"] ?>" alt="profile">
                     </td>
                     <td><?= $product["title"] ?></td>
                     <td>

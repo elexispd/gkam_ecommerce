@@ -74,15 +74,32 @@ class product_model extends Cee_Model
         $conn = $result1[1];
         return $result;
     }
+    static function getProducts()
+    {
+        $key = configurations::systemkey();
+        $sql = "SELECT id , AES_DECRYPT(title,'" . $key . "') as title, AES_DECRYPT(description,'" . $key . "') as description ,  AES_DECRYPT(price,'" . $key . "') as price,  AES_DECRYPT(created_at,'" . $key . "') as created_at, AES_DECRYPT(status,'" . $key . "') as status,  AES_DECRYPT(user_id,'" . $key . "') as user_id FROM products WHERE status =  AES_ENCRYPT('1','" . $key . "') ORDER BY id ";
 
-    // static function getProductImages($product_id) {
-    //     $key = configurations::systemkey();
-    //     $sql = "SELECT id , AES_DECRYPT(product_id,'" . $key . "') as product_id  , AES_DECRYPT(product_image,'" . $key . "') as product_image FROM product_images WHERE product_id = AES_ENCRYPT(''.$product_id.'" . $key . "') ";
-    //     $result1 = Cee_Model::query($sql);
-    //     $result = $result1[0];
-    //     $conn = $result1[1];
-    //     return $result;
-    // }
+        $result1 = Cee_Model::query($sql);
+        $result = $result1[0];
+        $conn = $result1[1];
+        $data = [];
+        while($rows = $result->fetch_assoc()) {
+            $data[] = $rows;
+        }
+        return $data;
+    }
+
+    static function getProductImages($product_id) {
+        $key = configurations::systemkey();
+        $sql = "SELECT id , AES_DECRYPT(product_id,'" . $key . "') as product_id  , AES_DECRYPT(product_image,'" . $key . "') as product_image FROM product_images WHERE product_id = AES_ENCRYPT('".$product_id."','" . $key . "') ";
+        $result1 = Cee_Model::query($sql);
+        $result = $result1[0];
+        $conn = $result1[1];
+        while($rows = $result->fetch_assoc()) {
+            $data[] = $rows;
+        }
+        return $data;
+    }
     static function getProductThumbnail($product_id) {
         $key = configurations::systemkey();
         $sql = "SELECT id , AES_DECRYPT(product_id,'" . $key . "') as product_id  , AES_DECRYPT(product_image,'" . $key . "') as product_image FROM product_images WHERE product_id = AES_ENCRYPT('" . $product_id . "','" . $key . "') LIMIT 1";
