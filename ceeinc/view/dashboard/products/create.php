@@ -27,6 +27,14 @@
                   <?php endforeach; ?>
                 </select>
               </div>
+
+              <!-- Container for dynamic inputs -->
+              <div class="col-12">
+                <div class="row" id="dynamic-parameters">
+
+                </div>
+              </div>
+
               <div class="col-md-3 position-relative">
                 <span class="text-danger">*</span><label class="form-label" for="validationTooltip02">Price</label>
                 <input class="form-control" id="validationTooltip02" type="number" step="0.01" name="price" required>
@@ -150,6 +158,40 @@ $(document).ready(function() {
       });
     });
   });
+
+
+  $('#validationTooltip011').change(function() {
+        var selectedCategoryId = $(this).val();
+        var url_link = '<?= BASE_URL ?>product/getCategoryParameters';
+
+        $.ajax({
+            url: url_link,
+            type: 'GET',
+            data: { categ_id: selectedCategoryId },
+            dataType: 'html',
+            success: function(response) {
+                $('#dynamic-parameters').html(response);
+            },
+            error: function(xhr, status, error) {
+                Toastify({
+                    text: "Error: " + error,
+                    duration: 5000,
+                    close: true,
+                    style: {
+                        background: "linear-gradient(to right, #ff5f6d, #ffc371)",
+                    },
+                    offset: {
+                        x: 50,
+                        y: 10,
+                    },
+                }).showToast();
+            }
+        });
+    });
+
+
 });
+
+
 
 </script>

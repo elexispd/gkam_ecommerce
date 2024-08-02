@@ -12,8 +12,7 @@
                
           </div>
           <div class="card-body">
-            <form class="row g-3 needs-validation custom-input" id="categoryForm"  novalidate="" method="post" action="<?= BASE_URL ?>category_para/store" >
-
+            <form action="<?= BASE_URL ?>category_param/store" class="row g-3" id="categoryForm"  novalidate="" method="post">
               <div class="col-md-6 position-relative">
                 <label class="form-label" for="validationTooltip011">Parent Category</label>
                 <select name="parent_category" id="validationTooltip011"  class="form-control" >
@@ -44,16 +43,16 @@
                 </select>
               </div>
 
-              <div class="col-md-6 position-relative d-none" id="values_div">
-                <label class="form-label" for="validationTooltip01">Values (optional) </label>
-                <input class="form-control" id="validationTooltip01" type="text" name="categ_values" required="">
-              </div>
-
-             
-              <div class="col-12">
+                <div class="col-md-6 position-relative d-none" id="values_div">
+                    <label class="form-label" for="validationTooltip01">Values (searate with coma) </label>
+                    <input class="form-control" placeholder="Used,New"  id="validationTooltip01" type="text" name="categ_values">
+                </div>
+                <div class="col-12">    
                 <button class="btn btn-primary" type="submit">Submit</button>
-              </div>
+                <input type="text" id="base_url" value="<?= BASE_URL ?>category_param/store" hidden>
+              </div> 
             </form>
+
           </div>
         </div>
       </div>
@@ -66,10 +65,61 @@
     $("#categ_option").change(function(){
         var option = $(this).val();
         var type = option.split("-")[1];
-        if(type == 'select') {
+        if(type == 'select' || type == 'multiselect') {
             $('#values_div').removeClass('d-none');
         } else {
             $('#values_div').addClass('d-none');
         }
     })
+
+    
+
+    $('#categoryForm').submit(function(e) {
+        e.preventDefault(); // Prevent form submission
+        const BASE_URL = $('#base_url').val();
+        var formData = new FormData(this); // Create FormData object
+
+        $.ajax({
+            url: BASE_URL, 
+            type: 'POST',
+            data: formData,
+            dataType: 'json', 
+            contentType: false, // Ensure this is false for FormData
+            processData: false,
+        })
+        .done(function(data) {    
+            console.log(data);     
+        if(data.status === 'success') {
+            cuteAlert({
+                type: "success",
+                title: "Added Successfully",
+                message: data.message,
+                buttonText: "Ok"
+            }).then(() => {
+                location.reload(); // Reload the page
+            });
+            console.log(data.message)
+        } else {
+            cuteAlert({
+                type: "error",
+                title: "Failed to category option",
+                message: data.message,
+                buttonText: "Ok"
+            })
+            console.log(data.message)
+        }
+
+        })
+        .fail(function(data) {
+            cuteAlert({
+                type: "error",
+                title: "Category Option Failed",
+                message: data.responseText,
+                buttonText: "Ok"
+            })
+
+            
+        });
+    })
+
 </script>

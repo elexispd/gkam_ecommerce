@@ -4,15 +4,14 @@ class product_model extends Cee_Model
 {
 
     
-    static function store($title, $price, $old_price, $shipping, $sub_shipping, $description, $stock, $min_quantity, $photo_paths, $category)
-    {
+    static function store($title, $price, $old_price, $shipping, $sub_shipping, $description, $stock, $min_quantity, $photo_paths, $category, $parameters) {
         $key = configurations::systemkey();
         $user_id = users_model::currentUser()['id'];
         $date = date("YmdHis", time());
-
+    
         $conn = db::createion();
         $conn->begin_transaction(); // Start the transaction
-
+    
         try {
             // Insert product details
             $sql = "INSERT INTO products SET 
@@ -28,14 +27,14 @@ class product_model extends Cee_Model
                     created_at = AES_ENCRYPT('" . $date . "','" . $key . "') ,
                     status = AES_ENCRYPT('1','" . $key . "') ,
                     user_id = AES_ENCRYPT('" . $user_id . "','" . $key . "')";
-
+    
             $result = $conn->query($sql);
             if (!$result) {
                 throw new Exception($conn->error);
             }
-
+    
             $product_id = $conn->insert_id;
-
+    
             // Insert each photo path into the database
             foreach ($photo_paths as $photo_path) {
                 $photo_sql = "INSERT INTO product_images SET 
@@ -46,14 +45,30 @@ class product_model extends Cee_Model
                     throw new Exception($conn->error);
                 }
             }
-
+    
+            // Insert dynamic parameters
+            foreach ($parameters as $param_key => $param_value) {
+                $param_sql = "INSERT INTO product_parameters SET 
+                    product_id = AES_ENCRYPT('" . $product_id . "','" . $key . "') , 
+                    parameter_key = AES_ENCRYPT('" . $param_key . "','" . $key . "') , 
+                    parameter_value = AES_ENCRYPT('" . $param_value . "','" . $key . "') , 
+                    created_at = AES_ENCRYPT('" . $date . "','" . $key . "')";
+                $param_result = $conn->query($param_sql);
+                if (!$param_result) {
+                    throw new Exception($conn->error);
+                }
+            }
+    
             $conn->commit(); // Commit the transaction
-            return 1;
+            return $product_id;
         } catch (Exception $e) {
             $conn->rollback(); // Rollback the transaction on error
             return $e->getMessage();
         }
     }
+    
+
+    
 
     static function update_payment($reg_no, $classm, $session, $term, $component, $amount)
     {
@@ -68,6 +83,8 @@ class product_model extends Cee_Model
             return $conn->error;
         }
     }
+
+    
 
     static function getProductList()
     {
@@ -120,12 +137,17 @@ class product_model extends Cee_Model
 
     static function getProductByIdTitle($product_title, $product_id) {
         $key = configurations::systemkey();
-        $sql = "SELECT id , AES_DECRYPT(title,'" . $key . "') as title, AES_DECRYPT(description,'" . $key . "') as description ,  AES_DECRYPT(price,'" . $key . "') as price,  AES_DECRYPT(stock_quantity,'" . $key . "') as stock_quantity ,  AES_DECRYPT(created_at,'" . $key . "') as created_at, AES_DECRYPT(status,'" . $key . "') as status,  AES_DECRYPT(user_id,'" . $key . "') as user_id FROM products WHERE id = $product_id AND title =  AES_ENCRYPT('".$product_title."','" . $key . "') ";
+        $sql = "SELECT id , AES_DECRYPT(title,'" . $key . "') as title, AES_DECRYPT(description,'" . $key . "') as description , AES_DECRYPT(category,'" . $key . "') as category_id  ,  AES_DECRYPT(price,'" . $key . "') as price,  AES_DECRYPT(old_price,'" . $key . "') as old_price,  AES_DECRYPT(stock_quantity,'" . $key . "') as stock_quantity ,  AES_DECRYPT(created_at,'" . $key . "') as created_at, AES_DECRYPT(status,'" . $key . "') as status,  AES_DECRYPT(user_id,'" . $key . "') as user_id FROM products WHERE id = $product_id AND title =  AES_ENCRYPT('".$product_title."','" . $key . "') ";
 
         $result1 = Cee_Model::query($sql);
         $result = $result1[0];
         $conn = $result1[1];
-        return $result->fetch_assoc();
+        if($result->num_rows > 0) {
+            return $result->fetch_assoc();
+        } else {
+            return false;
+        }
+        
     }
     static function getProductById($product_id) {
         $key = configurations::systemkey();
@@ -160,6 +182,27 @@ class product_model extends Cee_Model
         return $result->fetch_assoc();
     }
 
+
+    static function getProductDetails($product_id) {
+        $key = configurations::systemkey();;
+        $sql = "SELECT id, 
+               AES_DECRYPT(product_id, '".$key."') AS product_id,
+               AES_DECRYPT(parameter_key , '".$key."') AS parameter_key,  
+               AES_DECRYPT(parameter_value , '".$key."') AS parameter_value,
+               AES_DECRYPT(created_at , '".$key."') AS created_at
+              FROM product_parameters WHERE product_id = AES_ENCRYPT('".$product_id."','".$key."')";
+        $result1 = Cee_Model::query($sql);
+        $result = $result1[0];
+        $conn =  $result1[1];
+        $result = $conn->query($sql);
+        $data = [];
+    
+        while ($rows = $result->fetch_assoc()) {
+            $data[] = $rows;
+        }
+    
+        return $data;
+    }
     
 
    

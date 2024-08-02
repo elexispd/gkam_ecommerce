@@ -4,7 +4,10 @@
     $product_id = Input::get('qu');
     $product_title = str_replace('-',' ', Input::get('tit') );
     $product = product_model::getProductByIdTitle($product_title, $product_id);
+    if($product !== false) {
     $product_images = product_model::getProductImages($product["id"]);
+    
+
 
 ?>
         <!-- offcanvas area start -->
@@ -123,7 +126,7 @@
                                     </div>
                                     <div class="product__price">
                                         <span class="new">$<?= number_format($product['price'], 2) ?></span>
-                                        <span class="old">$<?= !isset($product['old_price']) ? number_format($product['price'], 2) : number_format($product['old_price'], 2) ?></span>
+                                        <span class="old">$<?=  (!isset($product['old_price'])) ? number_format($product['price'], 2) : number_format($product['old_price'], 2) ?></span>
                                     </div>
                                     <div class="product__stock">
                                         <span>Availability :</span>
@@ -203,7 +206,29 @@
                                 <div class="tab-pane fade show active" id="des" role="tabpanel" aria-labelledby="des-tab">
                                     <div class="product__details-des-wrapper">
                                         <div class="product__details-des mb-20">
-                                            <?= $product['description']; ?>
+                                            <div class="row w-70">
+                                                <div class="col-6">
+                                                    <label for="description"><strong>Description</strong></label>
+                                                    <div id="description">
+                                                        <?= $product['description']; ?>
+                                                    </div>                                                    
+                                                </div>
+                                                <?php 
+                                                //    $parameter_ids = explode(',',$product["parameters"]);
+                                                $product_details = product_model::getProductDetails($product['id']);
+                                                foreach($product_details as $detail) {   
+                                                    $parameter_heading = category_parameter_model::paramOptionsById($detail["parameter_key"])["param_name"];                                               
+                                                //   echo "<pre>";print_r($product_details);echo "</pre>";
+                                                ?>
+                                                <div class="col-6">
+                                                    <label for="description"><strong><?=  $parameter_heading ?></strong></label>
+                                                    <div id="description">
+                                                        <?= $detail['parameter_value']; ?>
+                                                    </div> 
+                                                </div>
+                                              <?php } ?>
+                                            </div>
+                                            
                                         </div>
                                         
                                         <div class="product__details-des-banner w-img">
@@ -654,4 +679,11 @@
 
         </main>
 
-    
+   <?php } else {  ?>
+        <div class="d-flex justify-content-center align-items-center" style="height: 20vh;">
+            <div>
+                <h2 style="color:#F25A2B;">Not Found</h2>
+            </div>
+        </div>
+   <?php }
+    ?>

@@ -1,7 +1,7 @@
 <?php  
 
 class category_parameter_model extends category_model {
-    static function create($category_id, $name, $type, $param_option) {
+    static function store($category_id, $name, $type, $param_option) {
         $key = configurations::systemkey();; 
 		$date = date("YmdHis",time());
         $sql = "INSERT INTO category_parameters SET 
@@ -22,6 +22,7 @@ class category_parameter_model extends category_model {
             return "Database Error: " . $e->getMessage();
         }  
     }
+
 
     static function update($id, $category_id, $option, $param_option) {
         $status = 1;
@@ -59,7 +60,8 @@ class category_parameter_model extends category_model {
                AES_DECRYPT(category_id, '".$key."') AS categ_id,
                AES_DECRYPT(param_name , '".$key."') AS param_name,  
                AES_DECRYPT(param_values , '".$key."') AS param_values,
-               AES_DECRYPT(param_type , '".$key."') AS param_type
+               AES_DECRYPT(param_type , '".$key."') AS param_type,
+               AES_DECRYPT(created_at , '".$key."') AS created_at
               FROM category_parameters WHERE category_id = AES_ENCRYPT('".$categ_id."','".$key."')";
         $result1 = Cee_Model::query($sql);
         $result = $result1[0];
@@ -73,12 +75,26 @@ class category_parameter_model extends category_model {
     
         return $data;
     }
+    static function paramOptionsById($id) {
+        $key = configurations::systemkey();;
+        $sql = "SELECT id, 
+               AES_DECRYPT(category_id, '".$key."') AS categ_id,
+               AES_DECRYPT(param_name , '".$key."') AS param_name,  
+               AES_DECRYPT(param_values , '".$key."') AS param_values,
+               AES_DECRYPT(param_type , '".$key."') AS param_type,
+               AES_DECRYPT(created_at , '".$key."') AS created_at
+              FROM category_parameters WHERE id = $id";
+        $result1 = Cee_Model::query($sql);
+        $result = $result1[0];
+        $conn =  $result1[1];
+        $result = $conn->query($sql);
+    	$data =$result->fetch_assoc();
+        return $data;
+    }
 
     static function getCategOptions() {
 		
 		$options = [
-			"Title-textbox-title",
-			"Description-textbox-description",
 			"Type-select-type",
 			"Condition-select-condition",
 			"Gender-select-gender", 
@@ -93,7 +109,7 @@ class category_parameter_model extends category_model {
 			"Colour-textbox-colour",
 			"Breed-select-breed",
 			"Breed Type-multiselect-breed_type",
-			"Size-multiselect-size",
+			"Size-textbox-size",
 			"Upper Material-multiselect-upper_material",
 			"Outsole Material-multiselect-outsole_material",
 			"Fastening-multiselect-fastening",
@@ -138,6 +154,7 @@ class category_parameter_model extends category_model {
 	
 		return $options;
 	}
+
 
 
 

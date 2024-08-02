@@ -49,6 +49,7 @@ class category_model extends Cee_Model
         $conn = $result1[1];
         return $result;
     }
+    
 
     static function getParentCategory() {
         $key = configurations::systemkey();
