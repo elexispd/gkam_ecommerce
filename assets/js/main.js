@@ -104,11 +104,118 @@
 		if (scroll < 200) {
 			$("#header-sticky").removeClass("sticky");
 			$("#header__transparent").removeClass("transparent-sticky");
+			$('.header_bottom-main').addClass('unhide');
+			$('.header_bottom-sticky').addClass('hide');
+
 		} else {
 			$("#header-sticky").addClass("sticky");
 			$("#header__transparent").addClass("transparent-sticky");
+			$('.header_bottom-sticky').addClass('unhide');
+			$('.header_bottom-main').addClass('hide');
 		}
 	});
+
+	$(window).on('scroll', function () {
+		var scroll = $(window).scrollTop();
+		
+		if (scroll < 200) {
+			// Show header_bottom-main, hide header_bottom-sticky
+			$('.header_bottom-main').removeClass('hide').addClass('unhide');
+			$('.header_bottom-sticky').removeClass('unhide').addClass('hide');
+		} else {
+			// Show header_bottom-sticky, hide header_bottom-main
+			$('.header_bottom-sticky').removeClass('hide').addClass('unhide');
+			$('.header_bottom-main').removeClass('unhide').addClass('hide');
+		}
+	});
+	
+	////////////////////////////////////////////////////
+	// 07. CURRENCY AND LANGLUAGE Js
+	// Get references to the select elements
+const currencySelect = document.getElementById('currency-select');
+const languageSelect = document.getElementById('language-select');
+
+// Add event listener for currency selection
+currencySelect.addEventListener('change', function() {
+    const selectedCurrency = currencySelect.value;
+    console.log(`Selected currency: ${selectedCurrency}`);
+    // Here you can add code to update the prices on your page based on the selected currency
+    updateCurrency(selectedCurrency);
+});
+
+// Add event listener for language selection
+languageSelect.addEventListener('change', function() {
+    const selectedLanguage = languageSelect.value;
+    console.log(`Selected language: ${selectedLanguage}`);
+    // Here you can add code to update the content of your page based on the selected language
+    updateLanguage(selectedLanguage);
+});
+
+// Function to update currency 
+function updateCurrency(currency) {
+    
+    const prices = document.querySelectorAll('.price');
+    prices.forEach(price => {
+        // Update the price based on the selected currency
+        price.textContent = `${currency} ${price.dataset.amount}`;
+    });
+}
+
+// Function to update language (implement your own logic)
+function updateLanguage(language) {
+    // Example: Change the language of the page content
+    const elementsToTranslate = document.querySelectorAll('[data-translate-key]');
+    elementsToTranslate.forEach(element => {
+        const key = element.dataset.translateKey;
+        // Fetch the translation for the selected language
+        element.textContent = translations[language][key];
+    });
+}
+
+// Example translations object (you should replace this with your own translations)
+const translations = {
+    en: {
+        welcome: "Welcome",
+        // Other translations...
+    },
+    bn: {
+        welcome: "স্বাগতম",
+        // Other translations...
+    },
+    ar: {
+        welcome: "أهلا بك",
+        // Other translations...
+    },
+    hi: {
+        welcome: "स्वागत है",
+        // Other translations...
+    },
+    ur: {
+        welcome: "خوش آمدید",
+        // Other translations...
+    }
+};
+
+
+// JavaScript to adjust container aspect ratio based on image
+window.addEventListener('load', function() {
+    var img = document.getElementById('sliderImage');
+    var container = document.querySelector('.slider__inner');
+    
+    img.onload = function() {
+        var imgAspectRatio = img.naturalWidth / img.naturalHeight;
+        var containerWidth = container.offsetWidth;
+        var containerHeight = container.offsetHeight;
+        
+        if (imgAspectRatio > containerWidth / containerHeight) {
+            container.style.paddingBottom = (100 / imgAspectRatio) + '%';
+        } else {
+            container.style.paddingBottom = (imgAspectRatio * 100) + '%';
+        }
+    }
+});
+
+
 
 	////////////////////////////////////////////////////
     // 05. Data-Background Js

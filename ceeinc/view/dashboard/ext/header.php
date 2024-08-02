@@ -829,6 +829,7 @@ $loggedInUser = users_model::currentUser();
                     >
                     <ul class="sidebar-submenu">
                       <li><a href="<?= BASE_URL ?>category/create">Add Category</a></li>
+                      <li><a href="<?= BASE_URL ?>category_param/create">Add Category Options</a></li>
                       <li><a href="<?= BASE_URL ?>category/list">View Categories</a></li>                      
                     </ul>
                   </li>

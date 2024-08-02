@@ -2,7 +2,7 @@
  
 //normal development configuration
 $mode = "development";
-$base_url = "http://localhost/ecommerce/";
+$base_url = "http://localhost/gkam/";
 $processor_url = "syste/main/system.php";
 
 //define your default controller

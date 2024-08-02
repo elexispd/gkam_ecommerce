@@ -1,121 +1,90 @@
-   <!-- footer area start -->
-   <footer>
-            <div class="footer__area footer-bg">
-                <div class="footer__top pt-80 pb-40">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xl-7 col-lg-12">
-                                <div class="footer__top-left">
-                                    <div class="row">
-                                        <div class="col-xl-5 col-lg-6 col-md-6 col-sm-6">
-                                            <div class="footer__widget">
-                                                <div class="footer__widget-title mb-45">
-                                                    <div class="footer__logo">
-                                                        <a href="index.html"><img src="<?= BASE_URL ?>assets/img/logo/logo-white.png" alt=""></a>
-                                                    </div>
-                                                </div>
-                                                <div class="footer__widget-content">
-                                                    <div class="footer__hotline d-flex align-items-center mb-30">
-                                                        <div class="icon mr-15">
-                                                            <i class="fal fa-headset"></i>
-                                                        </div>
-                                                        <div class="text">
-                                                            <h4>Hotline Free 24/24:</h4>
-                                                            <span><a href="tel:100-123-456-7890">(+100) 123 456 7890</a></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="footer__info">
-                                                        <ul>
-                                                            <li>
-                                                                <span>Add:  <a target="_blank" href="https://www.google.com/maps/place/Dhaka/@23.7806207,90.3492859,12z/data=!3m1!4b1!4m5!3m4!1s0x3755b8b087026b81:0x8fa563bbdd5904c2!8m2!3d23.8104753!4d90.4119873">Walls Street 68, Mahattan, New York, USA</a></span></li>
-                                                            <li><span>Email: <a href="https://wphix.com/cdn-cgi/l/email-protection#50393e363f10243835322535233b297e333f3d"><span class="__cf_email__" data-cfemail="21484f474e61554944435444524a580f424e4c">[email&#160;protected]</span></a>  </span></li>
-                                                            <li><span>Fax: <a href="tel:123-456-7890">(+100) 123 456 7890</a> - <a href="tel:-100-123-456-7891">(+100) 123 456 7891</a> </span></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-7 col-lg-6 col-md-6 col-sm-6">
-                                            <div class="row">
-                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                                    <div class="footer__widget">
-                                                        <div class="footer__widget-title">
-                                                            <h4>Information</h4>
-                                                        </div>
-                                                        <div class="footer__widget-content">
-                                                            <div class="footer__link">
-                                                                <ul>
-                                                                    <li><a href="#"> Custom Service </a></li>
-                                                                    <li><a href="#">F.A.Q.’s</a></li>
-                                                                    <li><a href="#">Ordering Tracking</a></li>
-                                                                    <li><a href="#"> Contacts</a></li>
-                                                                    <li><a href="#">Events</a></li>
-                                                                    <li><a href="#">Popular</a></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                                    <div class="footer__widget">
-                                                        <div class="footer__widget-title">
-                                                            <h4>Our Services</h4>
-                                                        </div>
-                                                        <div class="footer__widget-content">
-                                                            <div class="footer__link">
-                                                                <ul>
-                                                                    <li><a href="#">Sitemap</a></li>
-                                                                    <li><a href="#">Privacy Policy</a></li>
-                                                                    <li><a href="#">Your Account</a></li>
-                                                                    <li><a href="#">Advanced Search</a></li>
-                                                                    <li><a href="#">Terms & Condition</a></li>
-                                                                    <li><a href="#"> Contact Us</a></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-5 col-lg-12">
+
+    <!-- footer area start -->
+    <footer>
+        <div class="footer__area footer-bg">
+            <div class="footer__top pt-80 pb-40">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-7 col-lg-12">
+                            <div class="footer__top-left">
                                 <div class="row">
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="col-xl-5 col-lg-6 col-md-6 col-sm-6">
                                         <div class="footer__widget">
-                                            <div class="footer__widget-title">
-                                                <h4>My Account</h4>
+                                            <div class="footer__widget-title mb-45">
+                                                <div class="footer__logo">
+                                                    <a href="<?= BASE_URL ?>"><img src="<?= BASE_URL ?>assets/img/logo/logo-white.png"
+                                                            alt=""></a>
+                                                </div>
                                             </div>
                                             <div class="footer__widget-content">
-                                                <div class="footer__link">
+                                                <div class="footer__hotline d-flex align-items-center mb-30">
+                                                    <div class="icon mr-15">
+                                                        <i class="fal fa-headset"></i>
+                                                    </div>
+                                                    <div class="text">
+                                                        <h4>Hotline Free 24/24:</h4>
+                                                        <span><a href="tel:100-123-456-7890">(+100) 123 456
+                                                                7890</a></span>
+                                                    </div>
+                                                </div>
+                                                <div class="footer__info">
                                                     <ul>
-                                                        <li><a href="#"> About us </a></li>
-                                                        <li><a href="#">Delivery Information</a></li>
-                                                        <li><a href="#">Privacy Policy</a></li>
-                                                        <li><a href="#">Discount</a></li>
-                                                        <li><a href="#">Custom Service</a></li>
-                                                        <li><a href="#">Terms & Condition</a></li>
+                                                        <li>
+                                                            <span>Add: <a target="_blank"
+                                                                    href="https://www.google.com/maps/place/Dhaka/@23.7806207,90.3492859,12z/data=!3m1!4b1!4m5!3m4!1s0x3755b8b087026b81:0x8fa563bbdd5904c2!8m2!3d23.8104753!4d90.4119873">Walls
+                                                                    Street 68, Mahattan, New York, USA</a></span>
+                                                        </li>
+                                                        <li><span>Email: <a
+                                                                    href="https://wphix.com/cdn-cgi/l/email-protection#50393e363f10243835322535233b297e333f3d"><span
+                                                                        class="__cf_email__"
+                                                                        data-cfemail="21484f474e61554944435444524a580f424e4c">[email&#160;protected]</span></a>
+                                                            </span></li>
+                                                        <li><span>Fax: <a href="tel:123-456-7890">(+100) 123 456
+                                                                    7890</a> - <a href="tel:-100-123-456-7891">(+100)
+                                                                    123 456 7891</a> </span></li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                        <div class="footer__widget">
-                                            <div class="footer__widget-title">
-                                                <h4>Payment & Shipping</h4>
+                                    <div class="col-xl-7 col-lg-6 col-md-6 col-sm-6">
+                                        <div class="row">
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                                <div class="footer__widget">
+                                                    <div class="footer__widget-title">
+                                                        <h4>Information</h4>
+                                                    </div>
+                                                    <div class="footer__widget-content">
+                                                        <div class="footer__link">
+                                                            <ul>
+                                                                <li><a href="#"> Custom Service </a></li>
+                                                                <li><a href="#">F.A.Q.’s</a></li>
+                                                                <li><a href="#">Ordering Tracking</a></li>
+                                                                <li><a href="#"> Contacts</a></li>
+                                                                <li><a href="#">Events</a></li>
+                                                                <li><a href="#">Popular</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="footer__widget-content">
-                                                <div class="footer__link">
-                                                    <ul>
-                                                        <li><a href="#">Terms Of Use</a></li>
-                                                        <li><a href="#">Payment Methods</a></li>
-                                                        <li><a href="#">Shipping Guide</a></li>
-                                                        <li><a href="#">Locations We Ship To</a></li>
-                                                        <li><a href="#">Estimated Delivery Time</a></li>
-                                                        <li><a href="#">Express</a></li>
-                                                    </ul>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                                <div class="footer__widget">
+                                                    <div class="footer__widget-title">
+                                                        <h4>Our Services</h4>
+                                                    </div>
+                                                    <div class="footer__widget-content">
+                                                        <div class="footer__link">
+                                                            <ul>
+                                                                <li><a href="#">Sitemap</a></li>
+                                                                <li><a href="#">Privacy Policy</a></li>
+                                                                <li><a href="#">Your Account</a></li>
+                                                                <li><a href="#">Advanced Search</a></li>
+                                                                <li><a href="#">Terms & Condition</a></li>
+                                                                <li><a href="#"> Contact Us</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -123,97 +92,143 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="footer__bottom pt-60 pb-60">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="footer__links text-center">
-                                    <p>
-                                        <a href="#">Air Conditioners</a>
-                                        <a href="#">Audios & Theaters</a>
-                                        <a href="#">Car Electronics</a>
-                                        <a href="#">Office Electronics</a>
-                                        <a href="#">TV Televisions</a>
-                                        <a href="#">Washing Machines</a>
-                                    </p>
-                                    <p>
-                                        <a href="#">Cookware</a>
-                                        <a href="#">Decoration</a>
-                                        <a href="#">Furniture </a>
-                                        <a href="#">Garden Tools</a>
-                                        <a href="#">Garden Equipments</a>
-                                        <a href="#">Powers And Hand Tools </a>
-                                        <a href="#">Utensil & Gadget </a>
-                                        <a href="#">Printers</a>
-                                        <a href="#">Projectors</a>
-                                        <a href="#">Scanners</a>
-                                        <a href="#">Store</a>
-                                        <a href="#">Business</a>
-                                    </p>
-                                    <p>
-                                        <a href="#">4K Ultra</a>
-                                        <a href="#"> HD TVs </a>
-                                        <a href="#">LED TVs</a>
-                                        <a href="#">OLED TVs</a>
-                                        <a href="#">Desktop</a>
-                                        <a href="#">PC</a>
-                                        <a href="#">Laptop</a>
-                                        <a href="#">Smartphones</a>
-                                        <a href="#">Tablet</a>
-                                        <a href="#">Game Controller</a>
-                                        <a href="#">Audio & Video</a>
-                                        <a href="#"> Wireless Speaker</a>
-                                        <a href="#">Drone</a>
-                                    </p>
+                        <div class="col-xl-5 col-lg-12">
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="footer__widget">
+                                        <div class="footer__widget-title">
+                                            <h4>My Account</h4>
+                                        </div>
+                                        <div class="footer__widget-content">
+                                            <div class="footer__link">
+                                                <ul>
+                                                    <li><a href="#"> About us </a></li>
+                                                    <li><a href="#">Delivery Information</a></li>
+                                                    <li><a href="#">Privacy Policy</a></li>
+                                                    <li><a href="#">Discount</a></li>
+                                                    <li><a href="#">Custom Service</a></li>
+                                                    <li><a href="#">Terms & Condition</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="footer__download text-center">
-                                    <h4>Download The App - Get 30% Sale Coupon</h4>
-                                    <a href="#" class="m-img"><img src="<?= BASE_URL ?>assets/img/icon/app-store.jpg" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer__copyright pt-30 pb-35 footer-bottom-bg">
-                    <div class="container">
-                        <div class="row align-items-center">
-                            <div class="col-xl-6 col-lg-6">
-                                <div class="footer__copyright-text">
-                                    <p>Copyright © <a href="index.html">Shop.</a> All Rights Reserved. <a href="#">Premium Esowp.</a></p>
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6">
-                                <div class="footer__payment f-right">
-                                    <a href="#" class="m-img"><img src="<?= BASE_URL ?>assets/img/icon/payment.png" alt=""></a>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="footer__widget">
+                                        <div class="footer__widget-title">
+                                            <h4>Payment & Shipping</h4>
+                                        </div>
+                                        <div class="footer__widget-content">
+                                            <div class="footer__link">
+                                                <ul>
+                                                    <li><a href="#">Terms Of Use</a></li>
+                                                    <li><a href="#">Payment Methods</a></li>
+                                                    <li><a href="#">Shipping Guide</a></li>
+                                                    <li><a href="#">Locations We Ship To</a></li>
+                                                    <li><a href="#">Estimated Delivery Time</a></li>
+                                                    <li><a href="#">Express</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </footer>
-        <!-- footer area end -->
+            <div class="footer__bottom pt-60 pb-60">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="footer__links text-center">
+                                <p>
+                                    <a href="#">Air Conditioners</a>
+                                    <a href="#">Audios & Theaters</a>
+                                    <a href="#">Car Electronics</a>
+                                    <a href="#">Office Electronics</a>
+                                    <a href="#">TV Televisions</a>
+                                    <a href="#">Washing Machines</a>
+                                </p>
+                                <p>
+                                    <a href="#">Cookware</a>
+                                    <a href="#">Decoration</a>
+                                    <a href="#">Furniture </a>
+                                    <a href="#">Garden Tools</a>
+                                    <a href="#">Garden Equipments</a>
+                                    <a href="#">Powers And Hand Tools </a>
+                                    <a href="#">Utensil & Gadget </a>
+                                    <a href="#">Printers</a>
+                                    <a href="#">Projectors</a>
+                                    <a href="#">Scanners</a>
+                                    <a href="#">Store</a>
+                                    <a href="#">Business</a>
+                                </p>
+                                <p>
+                                    <a href="#">4K Ultra</a>
+                                    <a href="#"> HD TVs </a>
+                                    <a href="#">LED TVs</a>
+                                    <a href="#">OLED TVs</a>
+                                    <a href="#">Desktop</a>
+                                    <a href="#">PC</a>
+                                    <a href="#">Laptop</a>
+                                    <a href="#">Smartphones</a>
+                                    <a href="#">Tablet</a>
+                                    <a href="#">Game Controller</a>
+                                    <a href="#">Audio & Video</a>
+                                    <a href="#"> Wireless Speaker</a>
+                                    <a href="#">Drone</a>
+                                </p>
+                            </div>
+                            <div class="footer__download text-center">
+                                <h4>Download The App - Get 30% Sale Coupon</h4>
+                                <a href="#" class="m-img"><img src="<?= BASE_URL ?>assets/img/icon/app-store.jpg" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__copyright pt-30 pb-35 footer-bottom-bg">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-xl-6 col-lg-6">
+                            <div class="footer__copyright-text">
+                                <p>Copyright © <a href="index.html">Shop.</a> All Rights Reserved. <a href="#">Premium
+                                        Esowp.</a></p>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6">
+                            <div class="footer__payment f-right">
+                                <a href="#" class="m-img"><img src="<?= BASE_URL ?>assets/img/icon/payment.png" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer area end -->
 
-		<!-- JS here -->
-        <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="<?= BASE_URL ?>assets/js/vendor/jquery-3.6.0.min.js"></script>
-        <script src="<?= BASE_URL ?>assets/js/vendor/waypoints.min.js"></script>
-        <script src="<?= BASE_URL ?>assets/js/bootstrap.bundle.min.js"></script>
-        <script src="<?= BASE_URL ?>assets/js/meanmenu.js"></script>
-        <script src="<?= BASE_URL ?>assets/js/slick.min.js"></script>
-        <script src="<?= BASE_URL ?>assets/js/backToTop.js"></script>
-        <script src="<?= BASE_URL ?>assets/js/jquery.fancybox.min.js"></script>
-        <script src="<?= BASE_URL ?>assets/js/countdown.js"></script>
-        <script src="<?= BASE_URL ?>assets/js/nice-select.min.js"></script>
-        <script src="<?= BASE_URL ?>assets/js/isotope.pkgd.min.js"></script>
-        <script src="<?= BASE_URL ?>assets/js/owl.carousel.min.js"></script>
-        <script src="<?= BASE_URL ?>assets/js/jquery-ui-slider-range.js"></script>
-        <script src="<?= BASE_URL ?>assets/js/ajax-form.js"></script>
-        <script src="<?= BASE_URL ?>assets/js/wow.min.js"></script>
-        <script src="<?= BASE_URL ?>assets/js/imagesloaded.pkgd.min.js"></script>
-        <script src="<?= BASE_URL ?>assets/js/main.js"></script>
-    </body>
+    <!-- JS here -->
+    <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/vendor/waypoints.min.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/meanmenu.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/slick.min.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/backToTop.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/jquery.fancybox.min.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/countdown.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/nice-select.min.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/isotope.pkgd.min.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/owl.carousel.min.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/jquery-ui-slider-range.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/ajax-form.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/wow.min.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/imagesloaded.pkgd.min.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/main.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/products/cart.js"></script>
+</body>
 
 <!-- Mirrored from wphix.com/template/topico-prev/topico/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 10 Jul 2024 07:52:24 GMT -->
+
 </html>

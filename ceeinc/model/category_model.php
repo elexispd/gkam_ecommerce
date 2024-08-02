@@ -69,6 +69,8 @@ class category_model extends Cee_Model
         return $result->fetch_assoc();
     }
 
+    
+
 
  
 

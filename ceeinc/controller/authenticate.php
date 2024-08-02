@@ -7,15 +7,15 @@ class authenticate extends ceemain
 
 
 	function login(){
-		$this->view("ext/header");
+		// $this->view("ext/header");
 		$this->view("login");
-		$this->view("ext/footer");
+		// $this->view("ext/footer");
 	}
 
 	function register(){
-		$this->view("ext/header");
+		// $this->view("ext/header");
 		$this->view("register");
-		$this->view("ext/footer");
+		// $this->view("ext/footer");
 	}
 
 	function store() {
@@ -70,7 +70,7 @@ class authenticate extends ceemain
 						$user = users_model::getUserByEmail($username)->fetch_assoc();
 						Session::set_ceedata("cip_username",$username);	
 						Session::set_ceedata("cip_password",$password);	
-						cee_matchapp::redirect("dashboard");
+						cee_matchapp::redirect("main");
 					}else{	
 						Session::set_ceedata("cip_auth","<div class='cee_error'> Invalid login details</div>"); 
                     	cee_matchapp::redirect("authenticate/login");									

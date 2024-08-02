@@ -42,7 +42,7 @@
                 <div class="preview-container"></div>
               </div>
               <div class="col-12">
-                <button class="btn btn-primary" type="submit">Submit form</button>
+                <button class="btn btn-primary" type="submit">Submit</button>
               </div>
             </form>
           </div>

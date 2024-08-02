@@ -3,7 +3,8 @@
 class product_model extends Cee_Model
 {
 
-    static function store($title, $price, $description, $stock, $photo_paths, $category)
+    
+    static function store($title, $price, $old_price, $shipping, $sub_shipping, $description, $stock, $min_quantity, $photo_paths, $category)
     {
         $key = configurations::systemkey();
         $user_id = users_model::currentUser()['id'];
@@ -19,7 +20,11 @@ class product_model extends Cee_Model
                     description = AES_ENCRYPT('" . $description . "','" . $key . "') , 
                     category = AES_ENCRYPT('" . $category . "','" . $key . "') ,
                     price = AES_ENCRYPT('" . $price . "','" . $key . "') ,
+                    old_price = AES_ENCRYPT('" . $old_price . "','" . $key . "') ,
+                    shipping = AES_ENCRYPT('" . $shipping . "','" . $key . "') ,
+                    sub_shipping = AES_ENCRYPT('" . $sub_shipping . "','" . $key . "') ,
                     stock_quantity = AES_ENCRYPT('" . $stock . "','" . $key . "') ,
+                    min_quantity = AES_ENCRYPT('" . $min_quantity . "','" . $key . "') ,
                     created_at = AES_ENCRYPT('" . $date . "','" . $key . "') ,
                     status = AES_ENCRYPT('1','" . $key . "') ,
                     user_id = AES_ENCRYPT('" . $user_id . "','" . $key . "')";
@@ -74,6 +79,16 @@ class product_model extends Cee_Model
         $conn = $result1[1];
         return $result;
     }
+    static function getProductPrice($product_id)
+    {
+        $key = configurations::systemkey();
+        $sql = "SELECT id , AES_DECRYPT(price,'" . $key . "') as price FROM products WHERE id =  $product_id ";
+        $result1 = Cee_Model::query($sql);
+        $result = $result1[0];
+        $conn = $result1[1];
+        return $result->fetch_assoc()["price"];
+
+    }
     static function getProducts()
     {
         $key = configurations::systemkey();
@@ -88,7 +103,41 @@ class product_model extends Cee_Model
         }
         return $data;
     }
+    static function getBestProducts()
+    {
+        $key = configurations::systemkey();
+        $sql = "SELECT id , AES_DECRYPT(title,'" . $key . "') as title, AES_DECRYPT(description,'" . $key . "') as description ,  AES_DECRYPT(price,'" . $key . "') as price,  AES_DECRYPT(created_at,'" . $key . "') as created_at, AES_DECRYPT(status,'" . $key . "') as status,  AES_DECRYPT(user_id,'" . $key . "') as user_id FROM products WHERE status =  AES_ENCRYPT('1','" . $key . "') ORDER BY id LIMIT 10";
 
+        $result1 = Cee_Model::query($sql);
+        $result = $result1[0];
+        $conn = $result1[1];
+        $data = [];
+        while($rows = $result->fetch_assoc()) {
+            $data[] = $rows;
+        }
+        return $data;
+    }
+
+    static function getProductByIdTitle($product_title, $product_id) {
+        $key = configurations::systemkey();
+        $sql = "SELECT id , AES_DECRYPT(title,'" . $key . "') as title, AES_DECRYPT(description,'" . $key . "') as description ,  AES_DECRYPT(price,'" . $key . "') as price,  AES_DECRYPT(stock_quantity,'" . $key . "') as stock_quantity ,  AES_DECRYPT(created_at,'" . $key . "') as created_at, AES_DECRYPT(status,'" . $key . "') as status,  AES_DECRYPT(user_id,'" . $key . "') as user_id FROM products WHERE id = $product_id AND title =  AES_ENCRYPT('".$product_title."','" . $key . "') ";
+
+        $result1 = Cee_Model::query($sql);
+        $result = $result1[0];
+        $conn = $result1[1];
+        return $result->fetch_assoc();
+    }
+    static function getProductById($product_id) {
+        $key = configurations::systemkey();
+        $sql = "SELECT id , AES_DECRYPT(title,'" . $key . "') as title, AES_DECRYPT(description,'" . $key . "') as description ,  AES_DECRYPT(price,'" . $key . "') as price, AES_DECRYPT(shipping,'" . $key . "') as shipping, AES_DECRYPT(sub_shipping,'" . $key . "') as sub_shipping,  AES_DECRYPT(stock_quantity,'" . $key . "') as stock_quantity ,  AES_DECRYPT(created_at,'" . $key . "') as created_at, AES_DECRYPT(status,'" . $key . "') as status,  AES_DECRYPT(user_id,'" . $key . "') as user_id FROM products WHERE id = $product_id ";
+
+        $result1 = Cee_Model::query($sql);
+        $result = $result1[0];
+        $conn = $result1[1];
+        return $result->fetch_assoc();
+    }
+
+    
     static function getProductImages($product_id) {
         $key = configurations::systemkey();
         $sql = "SELECT id , AES_DECRYPT(product_id,'" . $key . "') as product_id  , AES_DECRYPT(product_image,'" . $key . "') as product_image FROM product_images WHERE product_id = AES_ENCRYPT('".$product_id."','" . $key . "') ";
@@ -100,6 +149,8 @@ class product_model extends Cee_Model
         }
         return $data;
     }
+
+
     static function getProductThumbnail($product_id) {
         $key = configurations::systemkey();
         $sql = "SELECT id , AES_DECRYPT(product_id,'" . $key . "') as product_id  , AES_DECRYPT(product_image,'" . $key . "') as product_image FROM product_images WHERE product_id = AES_ENCRYPT('" . $product_id . "','" . $key . "') LIMIT 1";
@@ -108,6 +159,9 @@ class product_model extends Cee_Model
         $conn = $result1[1];
         return $result->fetch_assoc();
     }
+
+    
+
    
 
  

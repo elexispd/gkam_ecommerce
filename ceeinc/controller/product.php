@@ -17,6 +17,11 @@ class product extends ceemain
         $this->view("dashboard/ext/footer");
     }
 
+    function show() {
+        $this->view("ext/header");
+        $this->view("products/show");
+        $this->view("ext/footer");
+    }
     function all_products() {
         $this->view("dashboard/ext/header");
         $this->view("dashboard/products/all_products");
@@ -24,19 +29,24 @@ class product extends ceemain
     }
 
     function store() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["title"]) && !empty($_POST["title"]) && isset($_POST["price"]) && !empty($_POST["price"]) && isset($_POST["category"]) && !empty($_POST["category"]) && isset($_POST["stock"]) && !empty($_POST["stock"])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["title"]) && !empty($_POST["title"]) && isset($_POST["price"]) && !empty($_POST["price"]) && isset($_POST["category"]) && !empty($_POST["category"]) && isset($_POST["stock"]) && !empty($_POST["stock"])  && isset($_POST["min_quantity"]) && !empty($_POST["min_quantity"])  && isset($_POST["shipping"]) && !empty($_POST["shipping"]) ) {
             $title = Input::post("title");
             $price = Input::post("price");
+            $old_price = Input::post("old_price");
+            $shipping = Input::post("shipping");
+            $sub_shipping = empty(Input::post("sub_shipping")) ? 0 : Input::post("sub_shipping");
+            $old_price = empty(Input::post("old_price")) ? $price : Input::post("old_price");
             $stock = Input::post("stock");
+            $min_quantity = Input::post("min_quantity");
             $category = Input::post("category");
             $description = Input::post("description");
             $photos = $_FILES["photos"];
-            
+
             // Save product image files
             $photo_paths = $this->saveProductImages($photos);
     
             if ($photo_paths) {
-                $response = product_model::store($title, $price, $description, $stock, $photo_paths, $category);
+                $response = product_model::store($title, $price, $old_price, $shipping, $sub_shipping, $description, $stock, $min_quantity, $photo_paths, $category);
                 if ($response == 1) {
                     $this->msg = ["status" => "success", "message" => "Product was successfully created."];
                     echo json_encode($this->msg);
@@ -79,27 +89,67 @@ class product extends ceemain
     }
     
 
-    function getCategories() {
-        $categories = category_model::getCategoryList();
-        if($categories->num_rows > 0 ) {
-            $data = [];
-            while($row = $categories->fetch_assoc()) {
-                $data[] = $row;
+    function addToCart() {
+        header('Content-Type: application/json'); // Ensure JSON response header
+        ob_start(); // Start output buffering
+    
+        try {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["product_id"]) && !empty($_POST["product_id"]) && isset($_POST["quantity"]) && !empty($_POST["quantity"])) {
+                $product_id = Input::post("product_id");
+                $single_price = product_model::getProductPrice($product_id);
+                $quantity = Input::post("quantity");
+                $price = $single_price * $quantity;
+                $session_id = '';
+                $user_id = '';
+                if (empty(users_model::currentUser())) {
+                    $session_id = session_id();
+                } else {
+                    $user_id = users_model::currentUser()['id'];
+                }
+                
+                // Check if product already exists in cart
+                $is_in_cart =  cart_model::itemExistInCart($user_id, $session_id, $product_id);
+                if($is_in_cart == false) {
+                    $is_saved = cart_model::addToCart($user_id, $session_id, $product_id, $quantity, $price);
+                    if ($is_saved === 1) {
+                        $response = ["status" => "success", "message" => "Item added to cart with quantity ". $quantity];
+                    } else {
+                        $response = ["status" => "error", "message" => "Failed to add product to cart."];
+                    }
+                } else {
+                    $is_updated = cart_model::updateCart($user_id, $session_id, $quantity, $product_id, $price);
+                    if ($is_updated === true) {
+                        $response = ["status" => "success", "message" => "Product quantity updated successfully."];
+                    } else {
+                        $response = ["status" => "error", "message" => "Failed to update product quantity in cart."];
+                    }
+                }
+                
+            } else {
+                $response = ["status" => "error", "message" => "Invalid Request Or Parameters"];
             }
-            echo json_encode($data);
-        } else {
-            echo json_encode($this->msg);
+        } catch (Exception $e) {
+            $response = ["status" => "error", "message" => "An unexpected error occurred."];
         }
-        
+    
+        // Clear any previous output
+        ob_end_clean();
+    
+        // Send JSON response
+        echo json_encode($response);
     }
+    
+    
 
     function test() {
-        $this->msg = [
-            ["name" => "Puma", "quantity" => 5],
-            ["name" => "FireFly", "quantity" => 3]
-        ];
+        // $this->msg = [
+        //     ["name" => "Puma", "quantity" => 5],
+        //     ["name" => "FireFly", "quantity" => 3]
+        // ];
 
-        echo json_encode($this->msg);
+        $a = product_model::getProductPrice(8);
+        print_r($a);
+        // echo json_encode($this->msg);
     }
 
 

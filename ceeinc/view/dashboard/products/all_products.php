@@ -42,7 +42,7 @@
                     <?= $product["description"] ?>
                     </td>
                     <td>
-                    <?= $product["created_at"] ?>
+                    <?= Date::getDate($product["created_at"]);  ?>
                     </td>
                     <td> 
                       <ul class="action"> 

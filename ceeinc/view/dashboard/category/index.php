@@ -40,7 +40,7 @@
                             <td>
                                <?= $parent_category;   ?>
                             </td>
-                            <td>2011/04/25</td>
+                            <td><?= Date::getDate($category["created_at"]); ?></td>
                             <td> 
                               <ul class="action"> 
                                 <li class="edit"> <a href="#"><i class="icon-pencil-alt"></i></a></li>
