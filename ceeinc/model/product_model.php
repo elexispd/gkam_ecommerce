@@ -96,6 +96,17 @@ class product_model extends Cee_Model
         $conn = $result1[1];
         return $result;
     }
+    static function getMyProducts()
+    {
+        $user_id = users_model::currentUser()['id'];
+        $key = configurations::systemkey();
+        $sql = "SELECT id , AES_DECRYPT(title,'" . $key . "') as title, AES_DECRYPT(description,'" . $key . "') as description ,  AES_DECRYPT(price,'" . $key . "') as price, AES_DECRYPT(created_at,'" . $key . "') as created_at, AES_DECRYPT(status,'" . $key . "') as status,  AES_DECRYPT(user_id,'" . $key . "') as user_id FROM products WHERE user_id = AES_ENCRYPT('" . $user_id . "','" . $key . "')   ORDER BY id";
+
+        $result1 = Cee_Model::query($sql);
+        $result = $result1[0];
+        $conn = $result1[1];
+        return $result;
+    }
     static function getProductPrice($product_id)
     {
         $key = configurations::systemkey();
@@ -202,6 +213,10 @@ class product_model extends Cee_Model
         }
     
         return $data;
+    }
+
+    static function getVendor($product_id) {
+        
     }
     
 

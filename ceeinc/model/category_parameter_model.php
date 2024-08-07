@@ -24,35 +24,35 @@ class category_parameter_model extends category_model {
     }
 
 
-    static function update($id, $category_id, $option, $param_option) {
-        $status = 1;
-	    $key = configurations::systemkey();;
-        $date = date("YmdHis",time());
-		$sql = "UPDATE category_parameters SET = category_id = AES_ENCRYPT('".$category_id."','".$key."') , 
-        param_option = AES_ENCRYPT('".$option."','".$key."') , 
-        param_values = AES_ENCRYPT('".$param_option."','".$key."') , 
-        updated_at = AES_ENCRYPT('".$date."','".$key."')";
+    // static function update($id, $category_id, $optionn, $param_option) {
+    //     $status = 1;
+	//     $key = configurations::systemkey();;
+    //     $date = date("YmdHis",time());
+	// 	$sql = "UPDATE category_parameters SET = category_id = AES_ENCRYPT('".$category_id."','".$key."') , 
+    //     param_option = AES_ENCRYPT('".$option."','".$key."') , 
+    //     param_values = AES_ENCRYPT('".$param_option."','".$key."') , 
+    //     updated_at = AES_ENCRYPT('".$date."','".$key."')";
         
-        try {
-            $conn = db::createion();
+    //     try {
+    //         $conn = db::createion();
             
-            $result = $conn->query($sql);
+    //         $result = $conn->query($sql);
             
-            if ($result === true) {
-                if (mysqli_affected_rows($conn) > 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            } else {
-                return $conn->error;
-            }
-        } catch (\Throwable $e) {
-            return "Database Error: " . $e->getMessage();
-        }
+    //         if ($result === true) {
+    //             if (mysqli_affected_rows($conn) > 0) {
+    //                 return 1;
+    //             } else {
+    //                 return 0;
+    //             }
+    //         } else {
+    //             return $conn->error;
+    //         }
+    //     } catch (\Throwable $e) {
+    //         return "Database Error: " . $e->getMessage();
+    //     }
         
 
-	}
+	// }
 
     static function param_options($categ_id) {
         $key = configurations::systemkey();;

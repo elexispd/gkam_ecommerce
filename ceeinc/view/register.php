@@ -112,7 +112,7 @@
                                     <input id="last_name" type="text" name="last_name" placeholder="Enter your last name..." required />
                                     <input id="email" type="email" name="email" placeholder="Enter your email..."  required />
                                     <div class="password-wrapper">
-                                        <input id="pass" type="password" placeholder="Enter your placeholder..." required style="margin-bottom: 0px;"/>
+                                        <input id="pass" type="password" placeholder="Enter your placeholder..." name="password" required style="margin-bottom: 0px;"/>
                                         <span class="toggle-password" onclick="togglePassword()">
                                             <i id="eyeIcon" class="fas fa-eye"></i>
                                         </span>

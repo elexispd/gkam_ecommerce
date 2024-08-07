@@ -20,7 +20,7 @@ if (empty(users_model::currentUser())) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>E-commerce </title>
+    <title> GKAM SHOP INTERNATIONAL STORE </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -78,7 +78,7 @@ if (empty(users_model::currentUser())) {
                     <div class="row align-items-center">
                         <div class="col-xl-6 col-lg-6 col-md-5 d-none d-md-block">
                             <div class="header__welcome">
-                                <span>Welcome to Worldwide Electronics Store</span>
+                                <span>Welcome To Gkamstore International Shopping</span>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-7">
@@ -86,7 +86,7 @@ if (empty(users_model::currentUser())) {
                                 <ul>
                                 <?php 
                                     if(empty(Session::ceedata("cip_username"))) { ?>
-                                            <li><a href="<?= BASE_URL ?>authenticate/login">Sign In</a></li>
+                                            <li><a href="<?= BASE_URL ?>authenticate/login"> My Account</a></li>
                                         <?php  } else { ?>
                                         <li><a href="#">My Account</a></li>
                                         <li><a href="#">My Wishlist</a></li>
@@ -158,10 +158,10 @@ if (empty(users_model::currentUser())) {
                                         ?>
                                         </span>
                                     </a>
-                                    <span class="cart__content">
-                                        <span class="cart__my">My Cart:</span>
-                                        <span class="cart__total-price">$ 255.00</span>
-                                    </span>
+                                    <!-- <span class="cart__content"> -->
+                                        <!-- <span class="cart__my">My Cart:</span> -->
+                                        <!-- <span class="cart__total-price">$ 255.00</span> -->
+                                    <!-- </span> -->
                                     <div class="cart__mini">
                                         <div class="cart__close"><button type="button" class="cart__close-btn"><i
                                                     class="fal fa-times"></i></button>
@@ -177,7 +177,7 @@ if (empty(users_model::currentUser())) {
                                             if($cart_no > 0) { ?>
                                             <li>
                                                 <?php 
-                                                $cart_items = cart_model::getUserCartItems($user_id);
+                                                $cart_items = cart_model::getUserCartItems($user_id, $session_id);
                                                 $sub_total = 0;
                                                 $shipping_total = 0;
                                                 foreach($cart_items as $cart) {
@@ -193,6 +193,7 @@ if (empty(users_model::currentUser())) {
                                                     <div class="cart__inner d-flex">
                                                         <div class="cart__thumb">
                                                             <a href="<?= BASE_URL . 'product/show?tit=' . $excerp . '&qu=' . $cart['product_id']; ?>">
+                                                               
                                                                 <img src="<?= BASE_URL. $thumbnail ?>"
                                                                     alt="">
                                                             </a>
@@ -220,12 +221,16 @@ if (empty(users_model::currentUser())) {
                                             <li>
                                                 <a href="<?= BASE_URL ?>checkout" class="t-y-btn w-100 mb-10">Proceed to
                                                     checkout</a>
-                                                <a href="<?= BASE_URL ?>cart/edit" class="t-y-btn t-y-btn-border w-100 mb-10">view add
+                                                <a href="<?= BASE_URL ?>cart" class="t-y-btn t-y-btn-border w-100 mb-10">view add
                                                     edit cart</a>
                                             </li>
                                             <?php 
 
-                                            }
+                                            } else { ?>
+                                                <tr>
+                                                    <td>No Item In Cart</td>
+                                                </tr>
+                                           <?php }
                                             ?>
                                         </ul>
                                     </div>
@@ -249,52 +254,12 @@ if (empty(users_model::currentUser())) {
                                     <nav>
                                         <ul>
                                             <li>
-                                                <a href="index.html">Home <i class="far fa-angle-down"></i></a>
-                                                <ul class="submenu">
-                                                    <li><a href="index.html">Home Style 1</a></li>
-                                                    <li><a href="index-2.html">Home Style 2</a></li>
-                                                    <li><a href="index-3.html">Home Style 3</a></li>
-                                                    <li><a href="index-4.html">Home Style 4</a></li>
-                                                </ul>
+                                                <a href="<?= BASE_URL ?>">Home</i></a>
+                                                
                                             </li>
-                                            <li><a href="product.html">Features <i class="far fa-angle-down"></i></a>
-                                                <ul class="submenu">
-                                                    <li><a href="product.html">Product Type</a></li>
-                                                    <li><a href="product.html">Product Features <i
-                                                                class="far fa-angle-down"></i></a>
-                                                        <ul class="submenu">
-                                                            <li><a href="product-details.html">Simple Product</a></li>
-                                                            <li><a href="product-details-config.html">Configurable
-                                                                    Product</a></li>
-                                                            <li><a href="product-details-group.html">Group Product</a>
-                                                            </li>
-                                                            <li><a href="product-details-download.html">Downloadable
-                                                                    Product</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="product.html">Shop By Brand</a></li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="blog.html">Blog <i class="far fa-angle-down"></i></a>
-                                                <ul class="submenu">
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="blog-details.html">Blog Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="about.html">about us</a></li>
-                                            <li><a href="contact.html">contact</a></li>
-                                            <li>
-                                                <a href="about.html">pages <i class="far fa-angle-down"></i></a>
-                                                <ul class="submenu">
-                                                    <li><a href="login.html">Login</a></li>
-                                                    <li><a href="register.html">Register</a></li>
-                                                    <li><a href="cart.html">Cart</a></li>
-                                                    <li><a href="wishlist.html">Wishlist</a></li>
-                                                    <li><a href="checkout.html">Checkout</a></li>
-                                                    <li><a href="error.html">404 Error</a></li>
-                                                </ul>
-                                            </li>
+                                            <li><a href="about">about us</a></li>
+                                            <li><a href="contact">contact</a></li>
+                                            
                                         </ul>
                                     </nav>
                                 </div>
@@ -305,10 +270,6 @@ if (empty(users_model::currentUser())) {
                                 <div class="header__currency">
                                     <select id="currency-select">
                                         <option value="USD">USD</option>
-                                        <option value="EUR">EUR</option>
-                                        <option value="GBP">GBP</option>
-                                        <option value="JPY">JPY</option>
-                                        <option value="INR">INR</option>
                                     </select>
                                 </div>
                                 <div class="header__lang d-md-none d-lg-block">
@@ -344,52 +305,12 @@ if (empty(users_model::currentUser())) {
                                     <nav>
                                         <ul>
                                             <li>
-                                                <a href="index.html">Home <i class="far fa-angle-down"></i></a>
-                                                <ul class="submenu">
-                                                    <li><a href="index.html">Home Style 1</a></li>
-                                                    <li><a href="index-2.html">Home Style 2</a></li>
-                                                    <li><a href="index-3.html">Home Style 3</a></li>
-                                                    <li><a href="index-4.html">Home Style 4</a></li>
-                                                </ul>
+                                                <a href="<?= BASE_URL ?>">Home</i></a>
+                                               
                                             </li>
-                                            <li><a href="product.html">Features <i class="far fa-angle-down"></i></a>
-                                                <ul class="submenu">
-                                                    <li><a href="product.html">Product Type</a></li>
-                                                    <li><a href="product.html">Product Features <i
-                                                                class="far fa-angle-down"></i></a>
-                                                        <ul class="submenu">
-                                                            <li><a href="product-details.html">Simple Product</a></li>
-                                                            <li><a href="product-details-config.html">Configurable
-                                                                    Product</a></li>
-                                                            <li><a href="product-details-group.html">Group Product</a>
-                                                            </li>
-                                                            <li><a href="product-details-download.html">Downloadable
-                                                                    Product</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="product.html">Shop By Brand</a></li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="blog.html">Blog <i class="far fa-angle-down"></i></a>
-                                                <ul class="submenu">
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="blog-details.html">Blog Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="about.html">about us</a></li>
-                                            <li><a href="contact.html">contact</a></li>
-                                            <li>
-                                                <a href="about.html">pages <i class="far fa-angle-down"></i></a>
-                                                <ul class="submenu">
-                                                    <li><a href="login.html">Login</a></li>
-                                                    <li><a href="register.html">Register</a></li>
-                                                    <li><a href="cart.html">Cart</a></li>
-                                                    <li><a href="wishlist.html">Wishlist</a></li>
-                                                    <li><a href="checkout.html">Checkout</a></li>
-                                                    <li><a href="error.html">404 Error</a></li>
-                                                </ul>
-                                            </li>
+                                            <li><a href="<?= BASE_URL ?>about">about us</a></li>
+                                            <li><a href="<?= BASE_URL ?>contact">contact</a></li>
+                                           
                                         </ul>
                                     </nav>
                                 </div>
@@ -399,10 +320,6 @@ if (empty(users_model::currentUser())) {
                             <div class="header__bottom-right d-flex justify-content-end">
                                 <div class="header__currency">
                                     <select>
-                                        <option>USD</option>
-                                        <option>USD</option>
-                                        <option>USD</option>
-                                        <option>USD</option>
                                         <option>USD</option>
                                     </select>
                                 </div>

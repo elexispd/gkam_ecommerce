@@ -70,6 +70,7 @@ class authenticate extends ceemain
 						$user = users_model::getUserByEmail($username)->fetch_assoc();
 						Session::set_ceedata("cip_username",$username);	
 						Session::set_ceedata("cip_password",$password);	
+						// $this->moveCartItemsToUser();
 						cee_matchapp::redirect("main");
 					}else{	
 						Session::set_ceedata("cip_auth","<div class='cee_error'> Invalid login details</div>"); 
@@ -86,6 +87,13 @@ class authenticate extends ceemain
 			Session::set_ceedata("cip_auth","<div class='cee_error'> Invalid request method </div>"); 
             cee_matchapp::redirect("authenticate/login"); 
 		}
+	}
+
+	function moveCartItemsToUser() {
+		$session_id = session_id();
+		$user_id = users_model::currentUser()['id'];
+		// Move items from guest cart to user cart
+		print_r(cart_model::moveCartItems($session_id, $user_id));
 	}
 
 	function logout() {

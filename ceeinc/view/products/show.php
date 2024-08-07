@@ -169,7 +169,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="pro-cart-btn mb-25">
-                                                    <a class="t-y-btn" type="" onclick="addToCart({  url: '<?= BASE_URL ?>product/addToCart', productId: <?= $product['id'] ?>, quantity: document.getElementById('quantityInput').value })" > Add to cart</a>
+                                                    <a class="t-y-btn" type="" onclick="addToCart({  url: '<?= BASE_URL ?>cart/addToCart', productId: <?= $product['id'] ?>, quantity: document.getElementById('quantityInput').value })" > Add to cart</a>
                                                 </div>
                                             </div>
                                         </form>

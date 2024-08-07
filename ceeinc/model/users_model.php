@@ -27,6 +27,19 @@ class users_model extends Cee_Model
 			return $conn->error;
 		}
 	}
+	static function update_role($user_id, $role)
+	{
+		$key = configurations::systemkey();
+		$date = date("YmdHis", time());
+		$sql = "UPDATE users SET role = AES_ENCRYPT('" . $role . "','" . $key . "') WHERE id =  $user_id  ";
+		$conn = db::createion();
+		$result = $conn->query($sql);
+		if ($result === true) {
+			return 1;
+		} else {
+			return $conn->error;
+		}
+	}
 
 	static function store($firstname, $lastname, $email, $password)
 	{
@@ -81,7 +94,7 @@ class users_model extends Cee_Model
 		$username = users_model::username();
 		$time = date("YmdHis");
 		$key = configurations::systemkey();
-		$sql = "SELECT id , AES_DECRYPT(password,'" . $key . "') as password, AES_DECRYPT(email,'" . $key . "') as username , AES_DECRYPT(first_name,'" . $key . "') as first_name , AES_DECRYPT(last_name,'" . $key . "') as last_name FROM users WHERE email = AES_ENCRYPT('" . $username . "','" . $key . "') ORDER BY id DESC ";
+		$sql = "SELECT id , AES_DECRYPT(email,'" . $key . "') as email, AES_DECRYPT(password,'" . $key . "') as password, AES_DECRYPT(email,'" . $key . "') as username , AES_DECRYPT(first_name,'" . $key . "') as first_name ,  AES_DECRYPT(role,'" . $key . "') as role , AES_DECRYPT(last_name,'" . $key . "') as last_name FROM users WHERE email = AES_ENCRYPT('" . $username . "','" . $key . "') ORDER BY id DESC ";
 		$result1 = Cee_Model::query($sql);
 		$result = $result1[0];
 		$conn = $result1[1];

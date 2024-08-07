@@ -46,6 +46,16 @@ class Cee_Model extends db{
 	return $result;
 	 }
 
+	 static function apploading($thirsparty){  
+		foreach($thirsparty as $dked){
+		  if(is_file("ceeinc/ceeparty/".$dked.".php")){
+		  	require_once("ceeinc/ceeparty/".$dked.".php");
+		  }	else{
+			  Cee_assets::throError("Sorry , ceeparty ".$dked." does not exist");
+			}
+		}
+	}
+
 
 
 

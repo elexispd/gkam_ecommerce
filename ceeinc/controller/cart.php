@@ -2,13 +2,20 @@
 
 class cart extends ceemain
 {
+
+    function ceem() {
+        $this->view("ext/header");
+        $this->view("cart/cart");
+        $this->view("ext/footer");
+    }
+
     function addToCart() {
         header('Content-Type: application/json'); // Ensure JSON response header
         ob_start(); // Start output buffering
     
         try {
-            if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET["cart_id"]) && !empty($_GET["cart_id"]) ) {
-                $product_id = Input::get("cart_id");
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["product_id"]) && !empty($_POST["product_id"]) && isset($_POST["quantity"]) && !empty($_POST["quantity"])) {
+                $product_id = Input::post("product_id");
                 $single_price = product_model::getProductPrice($product_id);
                 $quantity = Input::post("quantity");
                 $price = $single_price * $quantity;
@@ -51,6 +58,7 @@ class cart extends ceemain
         // Send JSON response
         echo json_encode($response);
     }
+
     function removeFromCart() {
         header('Content-Type: application/json'); // Ensure JSON response header
         ob_start(); // Start output buffering
@@ -102,7 +110,8 @@ class cart extends ceemain
         $cart_no = (!empty(cart_model::getCartItemCount($user_id, $session_id)) ? cart_model::getCartItemCount($user_id, $session_id) : 0);
     
         ob_start();
-        ?>
+        if($cart_no > 0) { ?>
+        
         <ul id="cart-items-list">
             <li class="d-flex justify-content-between">
                 <div class="cart__title">
@@ -113,10 +122,10 @@ class cart extends ceemain
                     <button type="button" class="cart__close-btn"><i class="fal fa-times"></i></button>
                 </div>
             </li>
-            <?php if($cart_no > 0) { ?>
+            
             <li>
                 <?php 
-                $cart_items = cart_model::getUserCartItems($user_id);
+                $cart_items = cart_model::getUserCartItems($user_id, $session_id);
                 $sub_total = 0;
                 foreach($cart_items as $cart) {
                     $product = product_model::getProductById($cart['product_id']);
@@ -154,12 +163,11 @@ class cart extends ceemain
             </li>
             <li>
                 <a href="<?= BASE_URL ?>checkout" class="t-y-btn w-100 mb-10">Proceed to checkout</a>
-                <a href="<?= BASE_URL ?>cart/edit" class="t-y-btn t-y-btn-border w-100 mb-10">view add edit cart</a>
+                <a href="<?= BASE_URL ?>cart" class="t-y-btn t-y-btn-border w-100 mb-10">view add edit cart</a>
             </li>
-            <?php } ?>
+            
         </ul>
         <?php 
-    
         $cartContentHtml = ob_get_clean();
     
         $details = [
@@ -168,9 +176,105 @@ class cart extends ceemain
             'price' => $sub_total
         ];
     
+        echo json_encode($details);    
+    } else {
+        $cartContentHtml = ob_get_clean(); ?>
+
+       <?php
+       
+       $details = 
+        ['cart_html' => '
+            <ul id="cart-items-list">
+        <li class="d-flex justify-content-between">
+            <div class="cart__title">
+                <h4>My Cart</h4>
+                <span>(0 Item in Cart)</span>
+            </div>
+            <div class="cart__close">
+                <button type="button" class="cart__close-btn"><i class="fal fa-times"></i></button>
+            </div>
+        </li>
+        <li>No item in cart</li>
+        </ul>
+        ', 
+            'itemNumber' => 0, 
+            'price' => 0
+        ];
         echo json_encode($details);
     }
+            
     
+        
+    
+    }
+    
+
+
+    public function getMainCartContent() {
+        $user_id = !empty(users_model::currentUser()) ? users_model::currentUser()['id'] : '';
+        $session_id = empty(users_model::currentUser()) ? session_id() : '';
+    
+        $cart_no = (!empty(cart_model::getCartItemCount($user_id, $session_id)) ? cart_model::getCartItemCount($user_id, $session_id) : 0);
+    
+        ob_start();
+        if($cart_no > 0) { ?>
+
+                <?php 
+                $cart_items = cart_model::getUserCartItems($user_id,$session_id);
+                $sub_total = 0;
+                foreach($cart_items as $cart) {
+                    $product = product_model::getProductById($cart['product_id']);
+                    $product_img = product_model::getProductThumbnail($cart['product_id']);
+                    $thumbnail = $product_img ? $product_img["product_image"] : BASE_URL.'assets/img/no_image.jpg';
+    
+                    $excerp = str_replace(' ', '-', $product["title"]); 
+                    $sub_total += $cart["price"];
+                ?>
+
+                <tr>
+                    <td class="product-thumbnail"><a href="<?= BASE_URL . 'product/show?tit=' . $excerp . '&qu=' . $cart['product_id']; ?>"><img src="<?= BASE_URL. $thumbnail ?>" alt=""></a></td>
+                    <td class="product-name"><a href="<?= BASE_URL . 'product/show?tit=' . $excerp . '&qu=' . $cart['product_id']; ?>"><?= $product["title"] ?> </a></td>
+                    <td class="product-price"><span class="amount">$<?=  number_format($cart["price"], 2) ?></span></td>
+                    <td class="product-quantity">
+                        <div class="cart-plus-minus"><input type="text" value="<?=  $cart["quantity"] ?>" /></div>
+                    </td>
+                    <td class="product-subtotal"><span class="amount">$<?=  number_format($cart["price"], 2) ?></span></td>
+                    <td class="product-remove"><a  onclick="removeFromMainCart(<?= $product['id'] ?>, '<?= BASE_URL ?>') " ><i class="fa fa-times"></i></a></td>
+                </tr>
+
+                
+                <?php } 
+
+                $cartContentHtml = ob_get_clean();
+                    
+                $details = [
+                    'cart_html' => $cartContentHtml, 
+                    'itemNumber' => $cart_no, 
+                    'price' => $sub_total
+                ];
+
+                echo json_encode($details);
+            
+            } else { 
+                $details = [
+                    'cart_html' => `<tr>
+                    <td>No Item In Cart</td>
+                </tr>`, 
+                    'itemNumber' => 0, 
+                    'price' => 0
+                ];
+                echo json_encode($details);
+        
+             }
+            
+
+
+    
+        
+    }
+
+
+
 
 
 }

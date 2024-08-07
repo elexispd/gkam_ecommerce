@@ -1,4 +1,125 @@
 
+<?php 
+    $full_name = '';
+    $email = '';
+    $country = '';
+    $state = '';
+    $city = '';
+    $zip_code = '';
+    $address = '';
+    $note = '';
+    $is_default = 0;
+    if (empty(users_model::currentUser())) {
+        
+    } else {
+        $user = users_model::currentUser();
+        $full_name = $user["first_name"]. " " .$user["last_name"];
+        $email = $user["username"];
+        $user_billing_details = Billing_model::getBillingByUser($email);
+
+
+
+        if(!empty($user_billing_details)) {
+            if($user_billing_details["is_default"] == 1) {
+                $country = $user_billing_details["country"];
+                $state = $user_billing_details["state"];
+                $city = $user_billing_details["city"];
+                $zip_code = $user_billing_details["zip_code"];
+                $address = $user_billing_details["address"];
+                $note = $user_billing_details["note"];
+                $is_default = $user_billing_details["is_default"];
+            } else {
+                $country = '';
+                $state = '';
+                $city = '';
+                $zip_code = '';
+                $address = '';
+                $note = '';
+                $is_default = 0;
+            }
+        } 
+    }
+    
+
+?>
+
+
+<style>
+    .processing-btn {
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.processing-btn::after {
+    content: "";
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.loading-icon {
+    border: 2px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 2px solid #3498db;
+    width: 12px;
+    height: 12px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+</style>
+
+<?php  
+
+$payment_msg = Session::ceedata("cip_payment");
+
+
+?>
+
+<script>
+    if('<?= $payment_msg ?>' == "success") {
+        Toastify({
+            text: "Payment made successfully",
+            duration: 10000,
+            close: true,
+            style: {
+                background: "linear-gradient(to right, #00b09b, #96c93d)",
+            },
+            offset: {
+                x: 50,
+                y: 10,
+            },
+        }).showToast();
+    } else if('<?= $payment_msg ?>' == "error") {
+        Toastify({
+            text: "Payment failed or cancelled",
+            duration: 10000,
+            close: true,
+            style: {
+                background: "linear-gradient(to right, #f1c40f, #f39c12)",
+            },
+            offset: {
+                x: 50,
+                y: 10,
+            },
+        }).showToast();
+    }
+</script>
+
+
         <!-- offcanvas area start -->
         <div class="offcanvas__area">
             <div class="offcanvas__wrapper">
@@ -92,6 +213,7 @@
                     <div class="coupon-accordion">
                             <!-- ACCORDION START -->
                             <h3>Have a coupon? <span id="showcoupon">Click here to enter your code</span></h3>
+                           
                             <div id="checkout_coupon" class="coupon-checkout-content">
                             <div class="coupon-info">
                                 <form action="#">
@@ -113,200 +235,121 @@
             <!-- checkout-area start -->
             <section class="checkout-area pb-70">
                 <div class="container">
-                    <form action="#">
+                    <form action="<?= BASE_URL ?>payment/generatePayment" method="POST" id="billing-form">
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="checkbox-form">
                                     <h3>Billing Details</h3>
-                                    <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="row">
+    
+                                            <div class="col-md-12">
+                                                <div class="checkout-form-list">
+                                                    <label>Full Name <span class="required">*</span></label>
+                                                    <input type="text" name="full_name" id="full_name" <?= (!empty($user['id']) ? 'readonly' : '') ?> value="<?= $full_name ?>" required />
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-12">
+                                                <div class="checkout-form-list">
+                                                    <label>Email</label>
+                                                    <input type="email" name="email" id="email" <?= (!empty($user['id']) ? 'readonly' : '') ?> value="<?= $email ?>" required />
+                                                </div>
+                                            </div>
+
                                             <div class="country-select">
-                                                <label>Country <span class="required">*</span></label>
-                                                <select>
-                                                    <option value="volvo">bangladesh</option>
-                                                    <option value="saab">Algeria</option>
-                                                    <option value="mercedes">Afghanistan</option>
-                                                    <option value="audi">Ghana</option>
-                                                    <option value="audi2">Albania</option>
-                                                    <option value="audi3">Bahrain</option>
-                                                    <option value="audi4">Colombia</option>
-                                                    <option value="audi5">Dominican Republic</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="checkout-form-list">
-                                                <label>First Name <span class="required">*</span></label>
-                                                <input type="text" placeholder="" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="checkout-form-list">
-                                                <label>Last Name <span class="required">*</span></label>
-                                                <input type="text" placeholder="" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="checkout-form-list">
-                                                <label>Company Name</label>
-                                                <input type="text" placeholder="" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="checkout-form-list">
-                                                <label>Address <span class="required">*</span></label>
-                                                <input type="text" placeholder="Street address" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="checkout-form-list">
-                                                <input type="text" placeholder="Apartment, suite, unit etc. (optional)" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="checkout-form-list">
-                                                <label>Town / City <span class="required">*</span></label>
-                                                <input type="text" placeholder="Town / City" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="checkout-form-list">
-                                                <label>State / County <span class="required">*</span></label>
-                                                <input type="text" placeholder="" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="checkout-form-list">
-                                                <label>Postcode / Zip <span class="required">*</span></label>
-                                                <input type="text" placeholder="Postcode / Zip" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="checkout-form-list">
-                                                <label>Email Address <span class="required">*</span></label>
-                                                <input type="email" placeholder="" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="checkout-form-list">
-                                                <label>Phone <span class="required">*</span></label>
-                                                <input type="text" placeholder="Postcode / Zip" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="checkout-form-list create-acc">
-                                                <input id="cbox" type="checkbox" />
-                                                <label>Create an account?</label>
-                                            </div>
-                                            <div id="cbox_info" class="checkout-form-list create-account">
-                                                <p>Create an account by entering the information below. If you are a returning
-                                                    customer please login at the top of the page.</p>
-                                                <label>Account password <span class="required">*</span></label>
-                                                <input type="password" placeholder="password" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="different-address">
-                                        <div class="ship-different-title">
-                                            <h3>
-                                                <label>Ship to a different address?</label>
-                                                <input id="ship-box" type="checkbox" />
-                                            </h3>
-                                        </div>
-                                        <div id="ship-box-info">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="country-select">
-                                                        <label>Country <span class="required">*</span></label>
-                                                        <select>
-                                                            <option value="volvo">bangladesh</option>
-                                                            <option value="saab">Algeria</option>
-                                                            <option value="mercedes">Afghanistan</option>
-                                                            <option value="audi">Ghana</option>
-                                                            <option value="audi2">Albania</option>
-                                                            <option value="audi3">Bahrain</option>
-                                                            <option value="audi4">Colombia</option>
-                                                            <option value="audi5">Dominican Republic</option>
-                                                        </select>
-                                                    </div>
+                                                    <label>Country <span class="required">*</span></label>
+                                                    <select name="country" id="country" >
+                                                        <?php 
+                                                            if(!empty($country)) { ?>
+                                                                <option value="<?= $country ?>"><?= $country ?></option>
+                                                            <?php } else { ?>
+                                                                <option value="">Select Country</option>
+                                                            <?php }
+                                                        ?>
+                                                        
+                                                        <option value="volvo">bangladesh</option>
+                                                        <option value="saab">Algeria</option>
+                                                        <option value="mercedes">Afghanistan</option>
+                                                        <option value="audi">Ghana</option>
+                                                        <option value="audi2">Albania</option>
+                                                        <option value="audi3">Bahrain</option>
+                                                        <option value="audi4">Colombia</option>
+                                                        <option value="audi5">Dominican Republic</option>
+                                                    </select>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="checkout-form-list">
-                                                        <label>First Name <span class="required">*</span></label>
-                                                        <input type="text" placeholder="" />
-                                                    </div>
+                                        
+                                            <div class="col-md-12">
+                                                <div class="checkout-form-list">
+                                                    <label>State / County <span class="required">*</span></label>
+                                                    <input type="text" name="state" id="state" value="<?= $state ?>" required />
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="checkout-form-list">
-                                                        <label>Last Name <span class="required">*</span></label>
-                                                        <input type="text" placeholder="" />
-                                                    </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="checkout-form-list">
+                                                    <label>Town / City <span class="required">*</span></label>
+                                                    <input type="text" name="city" id="city" value="<?= $city ?>" required />
                                                 </div>
-                                                <div class="col-md-12">
-                                                    <div class="checkout-form-list">
-                                                        <label>Company Name</label>
-                                                        <input type="text" placeholder="" />
-                                                    </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="checkout-form-list">
+                                                    <label>Address <span class="required">*</span></label>
+                                                    <input type="text" name="address" id="address" value="<?= $address ?>" required />
                                                 </div>
-                                                <div class="col-md-12">
-                                                    <div class="checkout-form-list">
-                                                        <label>Address <span class="required">*</span></label>
-                                                        <input type="text" placeholder="Street address" />
-                                                    </div>
+                                            </div>
+                                            
+                                            <div class="col-md-12">
+                                                <div class="checkout-form-list">
+                                                    <label>Postcode / Zip <span class="required">*</span></label>
+                                                    <input type="text" name="zip_code" id="zip_code" value="<?= $zip_code ?>" required />
                                                 </div>
-                                                <div class="col-md-12">
-                                                    <div class="checkout-form-list">
-                                                        <input type="text" placeholder="Apartment, suite, unit etc. (optional)" />
-                                                    </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="checkout-form-list create-acc">
+                                                    <input id="is_default" type="checkbox" 
+                                                    <?php 
+                                                        if($is_default == 1) {
+                                                            echo 'checked';
+                                                        }
+                                                    ?>
+                                                    name="is_default" />
+                                                    <label>Set as default</label>
                                                 </div>
-                                                <div class="col-md-12">
-                                                    <div class="checkout-form-list">
-                                                        <label>Town / City <span class="required">*</span></label>
-                                                        <input type="text" placeholder="Town / City" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="checkout-form-list">
-                                                        <label>State / County <span class="required">*</span></label>
-                                                        <input type="text" placeholder="" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="checkout-form-list">
-                                                        <label>Postcode / Zip <span class="required">*</span></label>
-                                                        <input type="text" placeholder="Postcode / Zip" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="checkout-form-list">
-                                                        <label>Email Address <span class="required">*</span></label>
-                                                        <input type="email" placeholder="" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="checkout-form-list">
-                                                        <label>Phone <span class="required">*</span></label>
-                                                        <input type="text" placeholder="Postcode / Zip" />
-                                                    </div>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="different-address">
+                                            <div class="ship-different-title">
+                                                <h3>
+                                                    <label>Ship to a different address?</label>
+                                                    <input id="ship-box" type="checkbox" />
+                                                </h3>
+                                            </div>
+                                        
+                                            <div class="order-notes">
+                                                <div class="checkout-form-list">
+                                                    <label>Order Notes</label>
+                                                    <textarea  id="note" name="note" cols="30" rows="10"
+                                                        placeholder="Notes about your order, e.g. special notes for delivery."><?= $note ?></textarea>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="order-notes">
-                                            <div class="checkout-form-list">
-                                                <label>Order Notes</label>
-                                                <textarea id="checkout-mess" cols="30" rows="10"
-                                                    placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="your-order mb-30 ">
                                     <h3>Your order</h3>
                                     <?php 
-                                    $user_id = users_model::currentUser()['id'];
-                                    $cart_items = cart_model::getUserCartItems($user_id);
+                                    if (empty(users_model::currentUser())) {
+                                        $session_id = session_id();
+                                        $user_id = '';
+                                    } else {
+                                        $user_id = users_model::currentUser()['id'];
+                                        $session_id = '';
+                                    }
+                                    $cart_items = cart_model::getUserCartItems($user_id, $session_id);
                                     
                                       if(count($cart_items) < 1) { ?>
                                         <h4 class="text-muted">You have no item in cart</h4>
@@ -324,6 +367,8 @@
                                                 <?php 
                                                     $sub_total = 0;
                                                     $shipping_total = 0;
+                                                    $sub_shipping_total = 0;
+                                                    $grand_total = 0;
                                                     foreach($cart_items as $cart) {
                                                         $product = product_model::getProductById($cart['product_id']);
                                                     ?>
@@ -338,6 +383,8 @@
                                                     <?php                       
                                                         $sub_total += $cart["price"];
                                                         $shipping_total += $product["shipping"];
+                                                        $sub_shipping_total += $product["sub_shipping"];
+                                                        $grand_total = $sub_total+$shipping_total+$sub_shipping_total;
                                                     }
                                                 ?>
 
@@ -359,14 +406,14 @@
                                                             </li>
                                                             <li>
                                                                 <input type="radio" name="shipping" />
-                                                                <label>Free Shipping:</label>
+                                                                <label>Sub Shipping: <span class="amount">$<?= number_format($sub_shipping_total, 2); ?></span></label>
                                                             </li>
                                                         </ul>
                                                     </td>
                                                 </tr>
                                                 <tr class="order-total">
                                                     <th>Order Total</th>
-                                                    <td><strong><span class="amount">$<?= number_format($sub_total+$shipping_total, 2); ?></span></strong>
+                                                    <td><strong><span class="amount">$<?= number_format($grand_total, 2); ?></span></strong>
                                                     </td>
                                                 </tr>
                                             </tfoot>
@@ -375,48 +422,9 @@
 
                                     <div class="payment-method">
                                         <div class="accordion" id="checkoutAccordion">
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="checkoutOne">
-                                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#bankOne" aria-expanded="true" aria-controls="bankOne">
-                                                Direct Bank Transfer
-                                                </button>
-                                            </h2>
-                                            <div id="bankOne" class="accordion-collapse collapse show" aria-labelledby="checkoutOne" data-bs-parent="#checkoutAccordion">
-                                                <div class="accordion-body">
-                                                Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="paymentTwo">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#payment" aria-expanded="false" aria-controls="payment">
-                                                Cheque Payment
-                                                </button>
-                                            </h2>
-                                            <div id="payment" class="accordion-collapse collapse" aria-labelledby="paymentTwo" data-bs-parent="#checkoutAccordion">
-                                                <div class="accordion-body">
-                                                Please send your cheque to Store Name, Store Street, Store Town, Store
-                                                State / County, Store
-                                                Postcode.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="paypalThree">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#paypal" aria-expanded="false" aria-controls="paypal">
-                                                PayPal
-                                                </button>
-                                            </h2>
-                                            <div id="paypal" class="accordion-collapse collapse" aria-labelledby="paypalThree" data-bs-parent="#checkoutAccordion">
-                                                <div class="accordion-body">
-                                                Pay via PayPal; you can pay with your credit card if you don’t have a
-                                                PayPal account.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        </div>
+                                       
                                         <div class="order-button-payment mt-20">
-                                        <button type="submit" class="t-y-btn t-y-btn-grey">Place order</button>
+                                        <button type="submit" id="order-btn" class="t-y-btn t-y-btn-grey">Place order</button>
                                         </div>
                                     </div>
                                     <?php } ?>
@@ -431,3 +439,149 @@
         </main>
 
  
+        <script>
+            $("#ship-box").change(function() {
+                if ($(this).is(':checked')) {
+                    $("input").val('');
+                    $("select").val('');
+                    $('#is_default').prop('checked', false);
+                } else {
+                    
+                }
+            });
+        </script>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    var stripe = Stripe('pk_test_51PjSyUDq80qrBqISLFFz1Auc99k1AJspiSKNYis8yav7vTMo2fg1JhOWdEvNUSCK2oCTqhsbVsN14euo3c2crHK100i5juRtgY');
+</script> 
+
+
+<script>
+   $(document).ready(function() {
+    $('#billing-form').submit(function(e) {
+        e.preventDefault();
+
+        // Disable the submit button and show loading message
+        var $orderBtn = $('#order-btn');
+        $orderBtn.prop('disabled', true).addClass('processing-btn');
+        $orderBtn.html('Processing <div class="loading-icon"></div>');
+
+        var cartItems = [];
+        var totalShipping = 0;
+        var totalSubShipping = 0;
+
+        <?php foreach($cart_items as $cart) { 
+            $product = product_model::getProductById($cart['product_id']);
+            $shipping = $product["shipping"];
+            $sub_shipping = $product["sub_shipping"];
+        ?>
+            totalShipping += <?= (int)$shipping ?>;
+            totalSubShipping += <?= (int)$sub_shipping ?>;
+            cartItems.push({
+                product_id: '<?= $cart['product_id'] ?>',
+                title: '<?= $product["title"] ?>',
+                quantity: <?= (int)$cart["quantity"] ?>,
+                price: <?= (int)($product["price"] * 100) ?> // Convert to cents
+            });
+        <?php } ?>
+
+        var billingDetails = {
+            full_name: $('#full_name').val(),
+            email: $('#email').val(),
+            address: $('#address').val(),
+            country: $('#country').val(),
+            state: $('#state').val(),
+            city: $('#city').val(),
+            zip_code: $('#zip_code').val(),
+            note: $('#note').val(),
+            is_default: $('#is_default').is(':checked') ? 1 : 0
+        };
+
+        $.ajax({
+            url: '<?= BASE_URL ?>payment/generatePayment',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ 
+                cart_items: cartItems, 
+                total_shipping: totalShipping * 100, // Convert to cents
+                total_sub_shipping: totalSubShipping * 100, // Convert to cents
+                billing_details: billingDetails
+            }),
+            success: function(response) {
+
+                console.log(response);
+                if (response.id) {
+                    stripe.redirectToCheckout({ sessionId: response.id }).then(function(result) {
+                        if (result.error) {
+                            alert(result.error.message);
+                            // Re-enable the button if there is an error
+                            $orderBtn.prop('disabled', false).removeClass('processing-btn').html('Place order');
+                        }
+                    });
+                } 
+                else if(response == 0) {
+                    Toastify({
+                        text: "You need to login to make payment",
+                        duration: 10000,
+                        close: true,
+                        style: {
+                            background: "linear-gradient(to right, #f1c40f, #f39c12)",
+                        },
+                        offset: {
+                            x: 50,
+                            y: 10,
+                        },
+                    }).showToast();
+                    $orderBtn.prop('disabled', false).removeClass('processing-btn').html('Place order');
+                } 
+                else {                    
+                    Toastify({
+                    text: 'Failed to create a checkout session.',
+                    duration: 10000,
+                    close: true,
+                    style: {
+                        background: "linear-gradient(to right, #f1c40f, #f39c12)",
+                    },
+                    offset: {
+                        x: 50,
+                        y: 10,
+                    },
+                }).showToast();
+                    // Re-enable the button if there is an error
+                    $orderBtn.prop('disabled', false).removeClass('processing-btn').html('Place order');
+                }
+            },
+            error: function(error) {
+                // console.error('Error:', error);
+                Toastify({
+                    text: 'Error to create a checkout session.',
+                    duration: 10000,
+                    close: true,
+                    style: {
+                        background: "linear-gradient(to right, #f1c40f, #f39c12)",
+                    },
+                    offset: {
+                        x: 50,
+                        y: 10,
+                    },
+                }).showToast();
+                
+                // Re-enable the button if there is an error
+                $orderBtn.prop('disabled', false).removeClass('processing-btn').html('Place order');
+            }
+        });
+    });
+});
+
+</script>
+
+<?php		
+    Session::set_ceedata("cip_payment","");			 
+?>
+
+
+
+
+
+

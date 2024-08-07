@@ -340,7 +340,7 @@
                                             <span class="price">$<?= number_format($best_seller["price"], 2) ?></span>
                                         </div>
                                         <div class="product__add-btn">
-                                            <button type="button" onclick="addToCart({  url: '<?= BASE_URL ?>product/addToCart', productId: <?= $best_seller['id'] ?>, quantity: 1 })" >Add to Cart</button>
+                                            <button type="button" onclick="addToCart({  url: '<?= BASE_URL ?>cart/addToCart', productId: <?= $best_seller['id'] ?>, quantity: 1 })" >Add to Cart</button>
                                         </div>
                                     </div>
                                     <?php 

@@ -8,8 +8,8 @@ $processor_url = "syste/main/system.php";
 //define your default controller
 $defaultcontroller = "main";
 
-$SCHOOL_TITLE = "E-COMMERCE"; 
-$SCHOOL_CODE = "E=COMMERCE";
+$SCHOOL_TITLE = "GKAM SHOP INTERNATIONAL STORE"; 
+$SCHOOL_CODE = "GKAM SHOP INTERNATIONAL STORE";
 
 //define where asset folder will be held
 $FOLDER_E= "externals";

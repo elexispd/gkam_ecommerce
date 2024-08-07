@@ -10,6 +10,11 @@ class product extends ceemain
 		$this->view("dashboard/product/my_product");
 		$this->view("dashboard/ext/footer");
 	}
+	function my_products(){
+		$this->view("dashboard/ext/header");
+		$this->view("dashboard/products/my_products");
+		$this->view("dashboard/ext/footer");
+	}
 
     function create() {
         $this->view("dashboard/ext/header");

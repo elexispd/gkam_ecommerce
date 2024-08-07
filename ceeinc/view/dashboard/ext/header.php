@@ -29,13 +29,13 @@ $loggedInUser = users_model::currentUser();
       content="admin template, Mofi admin template, dashboard template, flat admin template, responsive admin template, web app"
     />
     <meta name="author" content="pixelstrap" />
-    <link rel="icon" href="<?= BASE_URL ?>dashboard_assets/images/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="<?= BASE_URL ?>assets/img/logo/logo-black.png" type="image/x-icon" />
     <link
       rel="shortcut icon"
-      href="<?= BASE_URL ?>dashboard_assets/images/favicon.png"
+      href="<?= BASE_URL ?>assets/img/logo/logo-black.png"
       type="image/x-icon"
     />
-    <title>User Cards | Mofi - Premium Admin Template By Pixelstrap</title>
+    <title>User Dashboard | Gkam Shop International Store</title>
     <!-- Google font-->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
@@ -142,16 +142,16 @@ $loggedInUser = users_model::currentUser();
             <a href="index.html"
               ><img
                 class="img-fluid for-light"
-                src="<?= BASE_URL ?>dashboard_assets/images/logo/logo.png"
+                src="<?= BASE_URL ?>assets/img/logo/logo-black.png"
                 alt="" /><img
                 class="img-fluid for-dark"
-                src="<?= BASE_URL ?>dashboard_assets/images/logo/logo_light.png"
+                src="<?= BASE_URL ?>assets/img/logo/logo-black.png"
                 alt=""
             /></a>
           </div>
         </div>
         <div class="col-4 col-xl-4 page-title">
-          <h4 class="f-w-700">User Cards</h4>
+          <h4 class="f-w-700">User Dashboard</h4>
           <nav>
             <ol
               class="breadcrumb justify-content-sm-start align-items-center mb-0"
@@ -190,10 +190,10 @@ $loggedInUser = users_model::currentUser();
             </form>
             <div class="header-logo-wrapper col-auto p-0">
               <div class="logo-wrapper">
-                <a href="index.html"
+                <a href="<?= BASE_URL ?>"
                   ><img
                     class="img-fluid"
-                    src="<?= BASE_URL ?>dashboard_assets/images/logo/logo.png"
+                    src="<?= BASE_URL ?>assets/img/logo/logo-black.png"
                     alt=""
                 /></a>
               </div>
@@ -746,7 +746,7 @@ $loggedInUser = users_model::currentUser();
               <a href="<?= BASE_URL; ?>dashboard" 
                 ><img
                   class="img-fluid"
-                  src="<?= BASE_URL ?>dashboard_assets/images/logo/logo_light.png"
+                  src="<?= BASE_URL ?>assets/img/logo/logo-black.png"
                   alt=""
               /></a>
               <div class="back-btn"><i class="fa fa-angle-left"></i></div>
@@ -765,7 +765,7 @@ $loggedInUser = users_model::currentUser();
               <a href="index.html"
                 ><img
                   class="img-fluid"
-                  src="<?= BASE_URL ?>dashboard_assets/images/logo/logo-icon.png"
+                  src="<?= BASE_URL ?>assets/img/logo/logo-black.png"
                   alt=""
               /></a>
             </div>
@@ -779,7 +779,7 @@ $loggedInUser = users_model::currentUser();
                     <a href="index.html"
                       ><img
                         class="img-fluid"
-                        src="<?= BASE_URL ?>dashboard_assets/images/logo/logo-icon.png"
+                        src="<?= BASE_URL ?>assets/img/logo/logo-black.png"
                         alt=""
                     /></a>
                  
@@ -804,36 +804,43 @@ $loggedInUser = users_model::currentUser();
                     >
                     
                   </li>
+
+                  <?php
+                    if($loggedInUser["role"] == "admin" || $loggedInUser["role"] == "super_admin") { ?>
+                      <li class="sidebar-main-title">
+                        <div>
+                          <h6 class="lan-8">Categoryy</h6>
+                        </div>
+                      </li>
+                      <li class="sidebar-list">
+                        <i class="fa fa-thumb-tack"> </i
+                        ><a
+                          class="sidebar-link sidebar-title"
+                          href="javascript:void(0)"
+                        >
+                          <svg class="stroke-icon">
+                            <use
+                              href="<?= BASE_URL ?>dashboard_assets/svg/icon-sprite.svg#stroke-project"
+                            ></use>
+                          </svg>
+                          <svg class="fill-icon">
+                            <use
+                              href="<?= BASE_URL ?>dashboard_assets/svg/icon-sprite.svg#fill-project"
+                            ></use></svg
+                          ><span> Categories </span></a
+                        >
+                        <ul class="sidebar-submenu">
+                          <li><a href="<?= BASE_URL ?>category/create">Add Category</a></li>
+                          <li><a href="<?= BASE_URL ?>category_param/create">Add Category Options</a></li>
+                          <li><a href="<?= BASE_URL ?>category/list">View Categories</a></li>                      
+                          <li><a href="<?= BASE_URL ?>category_param/list">View Category Option</a></li>                      
+                        </ul>
+                      </li>
+                  <?php  }
+                  ?>
                   
-                  <li class="sidebar-main-title">
-                    <div>
-                      <h6 class="lan-8">Category</h6>
-                    </div>
-                  </li>
-                  <li class="sidebar-list">
-                    <i class="fa fa-thumb-tack"> </i
-                    ><a
-                      class="sidebar-link sidebar-title"
-                      href="javascript:void(0)"
-                    >
-                      <svg class="stroke-icon">
-                        <use
-                          href="<?= BASE_URL ?>dashboard_assets/svg/icon-sprite.svg#stroke-project"
-                        ></use>
-                      </svg>
-                      <svg class="fill-icon">
-                        <use
-                          href="<?= BASE_URL ?>dashboard_assets/svg/icon-sprite.svg#fill-project"
-                        ></use></svg
-                      ><span> Categories </span></a
-                    >
-                    <ul class="sidebar-submenu">
-                      <li><a href="<?= BASE_URL ?>category/create">Add Category</a></li>
-                      <li><a href="<?= BASE_URL ?>category_param/create">Add Category Options</a></li>
-                      <li><a href="<?= BASE_URL ?>category/list">View Categories</a></li>                      
-                      <li><a href="<?= BASE_URL ?>category_param/list">View Category Option</a></li>                      
-                    </ul>
-                  </li>
+                  
+                  
 
                   <!-- Ecommerce -->
                   <li class="sidebar-main-title">
@@ -859,15 +866,14 @@ $loggedInUser = users_model::currentUser();
                       ><span>Products</span></a
                     >
                     <ul class="sidebar-submenu">
-                      <li><a href="<?= BASE_URL ?>product/create">Add Product</a></li>
-                      <li><a href="<?= BASE_URL ?>product/all_products">Product List</a></li>
-                      <li><a href="<?= BASE_URL ?>product/my_products">My Products</a></li>                   
-                      <li>
-                        <label class="badge badge-light-success">New</label
-                        ><a href="category.html">Category page</a>
-                      </li>
-                      <li><a href="product-page.html">Product page</a></li>
-                      <li><a href="list-products.html">Product list</a></li>                     
+                      <?php 
+                        if($loggedInUser["role"] == "admin" || $loggedInUser["role"] == "super_admin") {?>
+                          <li><a href="<?= BASE_URL ?>product/all_products">Product List</a></li>
+                        <?php }
+                      ?>
+                      
+                      <li><a href="<?= BASE_URL ?>product/create">Add Product</a></li>                     
+                      <li><a href="<?= BASE_URL ?>product/my_products">My Products</a></li>                                      
                     </ul>
                   </li>
                   <!-- Orders -->
@@ -894,67 +900,97 @@ $loggedInUser = users_model::currentUser();
                       ><span>Orders</span></a
                     >
                     <ul class="sidebar-submenu">
-                      <li><a href="product.html">Pending Orders</a></li>
-                      <li><a href="product.html">Cancelled Orders</a></li>
-                      <li><a href="product.html">Approved Orders</a></li>
-                      <li><a href="order-history.html">Order History</a></li>
-                      
+                      <li><a href="<?= BASE_URL ?>order/history">All Orders</a></li>
+                      <li><a href="<?= BASE_URL ?>order/pending">Pending Orders</a></li>
+                      <li><a href="<?= BASE_URL ?>order/completed">Completed Orders</a></li>                     
                     </ul>
-                  </li>
-
-
-                  <li class="sidebar-main-title">
-                    <div>
-                      <h6 class="lan-8">Approvals</h6>
-                    </div>
-                  </li>
+                    
                   <li class="sidebar-list">
-                    <i class="fa fa-thumb-tack"> </i
+                    <i class="fa fa-thumb-tack"></i
                     ><a
                       class="sidebar-link sidebar-title"
                       href="javascript:void(0)"
                     >
                       <svg class="stroke-icon">
                         <use
-                          href="<?= BASE_URL ?>dashboard_assets/svg/icon-sprite.svg#stroke-project"
+                          href="<?= BASE_URL ?>dashboard_assets/svg/icon-sprite.svg#stroke-ecommerce"
                         ></use>
                       </svg>
                       <svg class="fill-icon">
                         <use
-                          href="<?= BASE_URL ?>dashboard_assets/svg/icon-sprite.svg#fill-project"
+                          href="<?= BASE_URL ?>dashboard_assets/svg/icon-sprite.svg#fill-ecommerce"
                         ></use></svg
-                      ><span> Approvals </span></a
+                      ><span>My Product Orders</span></a
                     >
                     <ul class="sidebar-submenu">
-                      <li><a href="projectcreate.html">Approved</a></li>
-                      <li><a href="projects.html">Pendingt</a></li>                      
+                      <li><a href="<?= BASE_URL ?>order/my_history">All Orders</a></li>
+                      <li><a href="<?= BASE_URL ?>order/my_pending">Pending Orders</a></li>
+                      <li><a href="<?= BASE_URL ?>order/my_completed">Completed Orders</a></li>                     
                     </ul>
+
                   </li>
 
+                  
 
-                  <li class="sidebar-main-title">
-                    <div>
-                      <h6 class="lan-1"> Users </h6>
-                    </div>
-                  </li>
-                  <li class="sidebar-list">
-                    <i class="fa fa-thumb-tack"></i
-                    ><a
-                      class="sidebar-link sidebar-title link-nav"
-                      href="support-ticket.html"
-                    >
-                      <svg class="stroke-icon">
-                        <use
-                          href="<?= BASE_URL ?>dashboard_assets/svg/icon-sprite.svg#stroke-support-tickets"
-                        ></use>
-                      </svg>
-                      <svg class="fill-icon">
-                        <use
-                          href="<?= BASE_URL ?>dashboard_assets/svg/icon-sprite.svg#fill-support-tickets"
-                        ></use></svg
-                      ><span>Users</span></a
-                    >
-                  </li>
+                  <?php 
+                        if($loggedInUser["role"] == "admin" || $loggedInUser["role"] == "super_admin") {?>
+                          <li class="sidebar-main-title">
+                            <div>
+                              <h6 class="lan-8">Approvals</h6>
+                            </div>
+                          </li>
+                          <li class="sidebar-list">
+                            <i class="fa fa-thumb-tack"> </i
+                            ><a
+                              class="sidebar-link sidebar-title"
+                              href="javascript:void(0)"
+                            >
+                              <svg class="stroke-icon">
+                                <use
+                                  href="<?= BASE_URL ?>dashboard_assets/svg/icon-sprite.svg#stroke-project"
+                                ></use>
+                              </svg>
+                              <svg class="fill-icon">
+                                <use
+                                  href="<?= BASE_URL ?>dashboard_assets/svg/icon-sprite.svg#fill-project"
+                                ></use></svg
+                              ><span> Approvals </span></a
+                            >
+                            <ul class="sidebar-submenu">
+                              <li><a href="projectcreate.html">Approved</a></li>
+                              <li><a href="projects.html">Pendingt</a></li>                      
+                            </ul>
+                          </li>
+                          <li class="sidebar-main-title">
+                            <div>
+                              <h6 class="lan-1"> Users </h6>
+                            </div>
+                          </li>
+                          <li class="sidebar-list">
+                            <i class="fa fa-thumb-tack"></i
+                            ><a
+                              class="sidebar-link sidebar-title link-nav"
+                              href="support-ticket.html"
+                            >
+                              <svg class="stroke-icon">
+                                <use
+                                  href="<?= BASE_URL ?>dashboard_assets/svg/icon-sprite.svg#stroke-support-tickets"
+                                ></use>
+                              </svg>
+                              <svg class="fill-icon">
+                                <use
+                                  href="<?= BASE_URL ?>dashboard_assets/svg/icon-sprite.svg#fill-support-tickets"
+                                ></use></svg
+                              ><span>Users</span></a
+                            >
+                          </li>
+
+                        <?php }
+                      ?>
+                  
+
+
+                  
 
                   <li class="sidebar-main-title">
                     <div>
